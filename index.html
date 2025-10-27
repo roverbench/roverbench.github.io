@@ -1,0 +1,2270 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <style>
+            pre, code {
+                font-size: 16px;
+            }
+        </style>
+
+        <title>ROVER: Benchmarking Reciprocal Cross-Modal Reasoning for Omnimodal Generation</title>
+        <link rel="icon" type="image/x-icon" href="./static/img/icons/logo.png">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Open Graph -->
+        <meta property="og:url" content="" />
+        <meta property="og:image" content="" />
+        <meta property="og:title" content="ROVER:Benchmarking Reciprocal Cross-Modal Reasoning for Omnimodal Generation" />
+        
+        <!-- Twitter -->
+        <meta name="twitter:url" content="" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="" />
+        <meta name="twitter:title" content="ROVER: Benchmarking Reciprocal Cross-Modal Reasoning for Omnimodal Generation" />
+        <meta name="twitter:description" content="" />
+
+        <!-- JS Libraries -->
+        <script src="./static/js/distill_template.v2.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+        <script src="https://rawgit.com/nstrayer/slid3r/master/dist/slid3r.js"></script>
+
+        <script defer="" src="./static/js/hider.js"></script>
+        <script defer src="./static/js/image_interact.js"></script>
+        <script defer src="./static/js/switch_videos.js"></script>
+        <script defer src="./static/js/video-speed.js"></script>
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" href="./static/css/style.css">
+        <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+        
+        <!-- KaTeX -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+        <!-- Plotly.js for charts -->
+        <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+        
+        <!-- FontAwesome -->
+        <script defer src="./static/js/fontawesome.all.min.js"></script>
+
+        <!-- Medium Zoom -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+        <script defer src="./static/js/medium-zoom.min.js"></script>
+        <script defer src="./static/js/zoom.js"></script>
+
+        <!-- Leaderboard Styles -->
+        <style>
+        
+        /* Key Findings - callout styling */
+        .highlight-box {
+            background: linear-gradient(180deg, #eef7ff 0%, #e6f2ff 100%);
+            border: 2px solid #6cb6ff;
+            border-radius: 16px;
+            padding: 18px 22px;
+            margin: 14px auto; /* centers when width <= 100% */
+            box-shadow: 0 6px 14px rgba(28, 100, 242, 0.08);
+            color: #1e3a8a; /* deep blue for readability */
+            font-size: 18px;
+            line-height: 1.6;
+            font-weight: 400; /* no bold for main content */
+            width: 120%;
+            /* When wider than parent, pull back equally on both sides */
+            margin-left: calc(-10%);
+            margin-right: calc(-10%);
+        }
+
+        /* Remove italics/bold inside highlight and make it crisp */
+        .highlight-box em { font-style: normal; font-weight: 400; }
+        .highlight-box strong { font-weight: 600; }
+
+        /* Bulleted look similar to the reference image */
+        .highlight-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .highlight-box + .highlight-box { margin-top: 16px; }
+
+        /* Mobile: keep it inside the viewport */
+        @media (max-width: 900px) {
+            .highlight-box {
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        /* Key Findings unified card styles */
+        .keyfinding-wrap {
+            max-width: 1200px;
+            width: 120%;
+            margin: 20px auto;
+            margin-left: -10%;
+            margin-right: auto;   
+        }
+        .keyfinding-card {
+            box-sizing: border-box;
+            border-left: 5px solid #b4ceee;
+            background: linear-gradient(135deg, #f1f8fc 0%, #f0f5fa 100%);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(209,189,232,0.08);
+        }
+        .keyfinding-title {
+            color: #7895b6;
+            margin: 0 0 15px 0;
+            font-weight: 700;
+            text-align: left;
+        }
+        .keyfinding-text {
+            margin: 0;
+            color: #2d3436;
+            text-align: left;
+        }
+
+           /* Leaderboard Styles */
+        .leaderboard-table {
+            width: 140%;
+            margin-left: -20%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .leaderboard-container { position: relative; }
+
+        .leaderboard-table thead {
+            background: #4a5568;
+            color: white;
+        }
+
+        .leaderboard-table th {
+            padding: 14px 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.025em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .sortable-header {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .sortable-header .sort-indicator {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            font-size: 14px;
+            line-height: 1;
+            transform: translateY(-50%);
+            color: #a0aec0;
+        }
+
+        .sortable-header.active .sort-indicator {
+            color: white;
+        }
+        
+        .section-header {
+            background-color: #deeef8;
+            font-weight: 700;
+            color: #2d3748;
+            letter-spacing: 1px;
+            font-size: 18px;
+            text-align: center;
+            padding: 12px !important;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .leaderboard-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #4a5568;
+            text-align: center;
+        }
+        
+        .leaderboard-table tbody tr {
+            transition: background-color 0.15s ease;
+        }
+        
+        .leaderboard-table tbody tr:hover {
+            background-color: #f7fafc;
+        }
+
+        .leaderboard-table td:first-child {
+            font-weight: 600;
+            text-align: left;
+            color: #2d3748;
+            padding-left: 20px;
+        }
+        
+        .leaderboard-table td:nth-child(8) {
+            font-size: 15px;
+            color: #2d3748;
+        }
+        
+        .human-level-row {
+            background: #fffbeb85 !important;
+            font-weight: 600;
+        }
+        
+        .top-performer {
+            background: #f0fdf494 !important;
+        }
+
+        .top-performer td:first-child::before {
+            content: '🥇 ';
+        }
+
+        .model-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-left: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .proprietary-badge {
+            background: #e2e8f0;
+            color: #475569;
+            border: 1px solid #cbd5e0;
+        }
+
+        .open-badge {
+            background: #e6fffa;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+        .edit-badge {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+        
+        .leaderboard-table tbody tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+        
+        .baseline-row {
+            font-style: italic;
+            opacity: 0.8;
+            background-color: #f9fafb;
+        }
+        
+        .best-score {
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-color: #cbd5e0;
+            text-underline-offset: 2px;
+        }
+
+        .section-divider {
+            border-top: 2px solid #e2e8f0;
+        }
+        
+        @media (max-width: 768px) {
+            .leaderboard-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scroll-behavior: smooth;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
+            
+            .leaderboard-table {
+                width: 1200px; /* Fixed width to ensure horizontal scrolling */
+                margin-left: 0;
+                font-size: 12px;
+                min-width: 1200px;
+            }
+            
+            .leaderboard-table th,
+            .leaderboard-table td {
+                padding: 8px;
+                white-space: nowrap;
+                min-width: 80px;
+            }
+            
+            .leaderboard-table td:first-child {
+                min-width: 180px;
+                max-width: 180px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding-left: 12px;
+            }
+
+            /* Add scroll hint for mobile users */
+            .leaderboard-container::after {
+                content: "← Swipe to scroll →";
+                position: absolute;
+                bottom: -25px;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 11px;
+                color: #666;
+                font-style: italic;
+                pointer-events: none;
+            }
+        }
+        </style>
+    </head>
+
+    <body>
+        <div class="header-wrapper">
+            <div class="header-container" id="header-container">
+                <div class="header-content">
+                    <h1 style="margin-top: 0px">
+                        <i><span class="rover-logo"><span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span></span></i>
+                    </h1>
+                    <div class="responsive-header">
+                        <h2>Benchmarking Reciprocal Cross-Modal Reasoning for Omnimodal Generation</h2>
+                    </div>
+                      
+
+                        <div class="icon-container">
+                            <div class="icon-item">
+                                
+                                <img src="./static/img/icons/bench.svg" alt="Benchmark Icon">
+                                <div><strong>Reciprocal Reasoning</strong>: We introduce the first benchmark targeting reciprocal cross-modal reasoning where one modality guides, verifies, or refines outputs in another.</div>
+                            </div>
+                            <div class="icon-item">
+                                <img src="./static/img/icons/evaluation.svg" alt="Evaluation Icon">
+                                <div><strong>Dual Settings</strong>: <span class="rover-text"><span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span></span> evaluates verbally-augmented visual generation and visually-augmented verbal reasoning across diverse domains and reasoning types.</div>
+                            </div>
+                            <div class="icon-item">
+                                <img src="./static/img/icons/speech.svg" alt="Generation Icon" class="icon">
+                                <div><strong>Comprehensive Evaluation</strong>: Multi-dimensional evaluation protocol assessing reasoning process, output alignment, and cross-modal consistency.</div>
+                            </div>
+                            <div class="icon-item">
+                                <img src="./static/img/icons/vision.svg" alt="Analysis Icon" class="icon">
+                                <div><strong>Key Insights</strong>: Cross-modal reasoning strongly correlates with visual generation performance, while current models show limited visually-augmented reasoning capabilities.</div>
+                            </div>
+                        </div>
+                    
+
+                    
+                    <!-- All paper links removed for privacy -->
+                </div>
+            </div>
+        </div>
+    <d-article>
+
+        <d-figure id="fig-teaser">
+            <figure>
+                <img data-zoomable="" draggable="false" src="static/img/teaser.png" alt="ROVER Teaser">
+                <br>
+                <figcaption>
+                    Figure 1:The <span class="rover-text"><span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span></span> benchmark. <span class="rover-text"><span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span></span> evaluates UMMs through reciprocal cross-modal reasoning: <strong>ROVER-IG</strong> (left) requires generating images with language-augmented reasoning, while <strong>ROVER-TG</strong> (right) requires generating text answers with visually-augmented reasoning.
+                </figcaption>
+            </figure>
+        </d-figure>
+        <!-- Abstract -->
+        <p class="text abstract">
+            Unified multimodal models (UMMs) have shown remarkable advances in understanding and generating text and images. However, prevailing evaluations treat these abilities in isolation, such that tasks with multimodal inputs and outputs are scored primarily through unimodal reasoning. Existing benchmarks rarely require the use of one modality to guide, verify, or refine outputs in the other, failing to capture a central aspiration of unified multimodal models: seamless reasoning across modalities.             We address this gap with <span class="rover-text"><span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span></span>, a human-annotated benchmark that explicitly targets reciprocal cross-modal reasoning, containing 1285 tasks grounded in 2,048 images spanning two complementary settings. <strong>Verbally-augmented reasoning for visual generation</strong> evaluates whether models can use structured verbal prompts and reasoning chains to guide faithful image synthesis. <strong>Visually-augmented reasoning for verbal generation</strong> evaluates whether models can generate intermediate visualizations that strengthen their own reasoning processes. 
+        </p>
+
+    
+        <div class="icon-row">
+            <a href="#rover-benchmark" class="icon-link">
+                <img src="./static/img/icons/bench.svg" alt="Benchmark Logo" class="icon" loading="lazy">
+                ROVER<br>Benchmark
+            </a>
+            <a href="#rover-demo" class="icon-link">
+                <img src="./static/img/icons/world.svg" alt="Viewer Logo" class="icon" loading="lazy">
+                Data<br>Viewer
+            </a>
+            <a href="#evaluation-protocol" class="icon-link">
+                <img src="./static/img/icons/evaluation.svg" alt="Evaluation Logo" class="icon" loading="lazy">
+                Evaluation<br>Protocol
+            </a>
+            <a href="#rover-leaderboard" class="icon-link">
+                <img src="./static/img/leaderboard-star-svgrepo-com.svg" alt="Leaderboard Logo" class="icon" loading="lazy">
+                ROVER<br>Leaderboard
+            </a>
+            <a href="#findings-and-insights" class="icon-link">
+                <img src="./static/img/icons/vision.svg" alt="Analysis Logo" class="icon" loading="lazy">
+                Findings &<br>Insights
+            </a>
+                </div>
+        
+
+        <p class="click-hint2" style="width: 85%;">
+            <img src="static/img/icons/click.gif" style="width: 1.5rem">
+            <strong>Click to jump to each section.</strong>
+        </p>
+        
+
+    <!-- Data Statistics Visualization -->
+    <h2 class="text"><span class="rover-text">
+        <span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span>
+    </span>Benchmark Statistics</h2>
+    <div id="data-statistics" class="data-statistics-container">
+        <div class="dual-charts-container">
+            <div class="chart-section">
+                <div id="sankey-chart-ig" style="width: 100%; height: 250px;"></div>
+                            </div>
+            <div class="chart-section">
+                <div id="sankey-chart-tg" style="width: 100%; height: 250px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+    <!-- ROVER Demo Section -->
+    <h2 class="text"><span class="rover-text">
+        <span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span>
+    </span>Data Viewer</h2>
+    <div id="rover-demo" class="rover-demo">
+        <h3><span class="rover-text"><span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span></span>-IG</h3>
+        <div class="category-nav">
+            <button class="category-btn active" onclick="showCategory('natural-science')">Natural Science</button>
+            <button class="category-btn" onclick="showCategory('culture-art')">Culture and Art</button>
+            <button class="category-btn" onclick="showCategory('common-sense')">Common Sense</button>
+            <button class="category-btn" onclick="showCategory('logic')">Logic</button>
+            </div>
+
+        <!-- Top Thumbnail Row -->
+        <div class="top-thumbnails">
+            <!-- Natural Science Thumbnails -->
+            <div id="natural-science-thumbnails" class="thumbnail-row">
+                <img class="top-thumbnail" src="./static/img/demo/science_1.jpg" alt="Natural Science 1" onclick="showDetail('natural-science', 'item1')">
+                <img class="top-thumbnail" src="./static/img/demo/science_2.jpg" alt="Natural Science 2" onclick="showDetail('natural-science', 'item2')">
+                <img class="top-thumbnail" src="./static/img/demo/science_3.jpg" alt="Natural Science 3" onclick="showDetail('natural-science', 'item3')">
+                <img class="top-thumbnail" src="./static/img/demo/science_4.jpg" alt="Natural Science 4" onclick="showDetail('natural-science', 'item4')">
+                <img class="top-thumbnail" src="./static/img/demo/science_5.jpg" alt="Natural Science 5" onclick="showDetail('natural-science', 'item5')">
+                <img class="top-thumbnail" src="./static/img/demo/science_6.jpg" alt="Natural Science 6" onclick="showDetail('natural-science', 'item6')">
+                <img class="top-thumbnail" src="./static/img/demo/science_7.jpg" alt="Natural Science 7" onclick="showDetail('natural-science', 'item7')">
+                <img class="top-thumbnail" src="./static/img/demo/science_8.jpg" alt="Natural Science 8" onclick="showDetail('natural-science', 'item8')">
+                <img class="top-thumbnail" src="./static/img/demo/science_9.jpg" alt="Natural Science 9" onclick="showDetail('natural-science', 'item9')">
+                <img class="top-thumbnail" src="./static/img/demo/science_10.jpg" alt="Natural Science 10" onclick="showDetail('natural-science', 'item10')">
+                <img class="top-thumbnail" src="./static/img/demo/science_11.jpg" alt="Natural Science 11" onclick="showDetail('natural-science', 'item11')">
+                <img class="top-thumbnail" src="./static/img/demo/science_12.jpg" alt="Natural Science 12" onclick="showDetail('natural-science', 'item12')">
+            </div>
+    
+            <!-- Culture and Art Thumbnails -->
+            <div id="culture-art-thumbnails" class="thumbnail-row" style="display: none;">
+                <img class="top-thumbnail" src="./static/img/demo/culture_1.jpg" alt="Culture 1" onclick="showDetail('culture-art', 'item1')">
+                <img class="top-thumbnail" src="./static/img/demo/culture_2.jpg" alt="Culture 2" onclick="showDetail('culture-art', 'item2')">
+                <img class="top-thumbnail" src="./static/img/demo/culture_3.jpg" alt="Culture 3" onclick="showDetail('culture-art', 'item3')">
+                <img class="top-thumbnail" src="./static/img/demo/culture_4.jpg" alt="Culture 4" onclick="showDetail('culture-art', 'item4')">
+                <img class="top-thumbnail" src="./static/img/demo/culture_5.jpg" alt="Culture 5" onclick="showDetail('culture-art', 'item5')">
+                <img class="top-thumbnail" src="./static/img/demo/culture_6.jpg" alt="Culture 6" onclick="showDetail('culture-art', 'item6')">
+                <img class="top-thumbnail" src="./static/img/demo/culture_7.jpg" alt="Culture 7" onclick="showDetail('culture-art', 'item7')">
+                <img class="top-thumbnail" src="./static/img/demo/culture_8.jpg" alt="Culture 8" onclick="showDetail('culture-art', 'item8')">
+                <img class="top-thumbnail" src="./static/img/demo/culture_9.jpg" alt="Culture 9" onclick="showDetail('culture-art', 'item9')">
+                <img class="top-thumbnail" src="./static/img/demo/culture_10.jpg" alt="Culture 10" onclick="showDetail('culture-art', 'item10')">
+                <img class="top-thumbnail" src="./static/img/demo/culture_11.jpg" alt="Culture 11" onclick="showDetail('culture-art', 'item11')">
+                <img class="top-thumbnail" src="./static/img/demo/culture_12.jpg" alt="Culture 12" onclick="showDetail('culture-art', 'item12')">
+                    </div>
+                
+            <!-- Common Sense Thumbnails -->
+            <div id="common-sense-thumbnails" class="thumbnail-row" style="display: none;">
+                <img class="top-thumbnail" src="./static/img/demo/common_1.jpg" alt="Common Sense 1" onclick="showDetail('common-sense', 'item1')">
+                <img class="top-thumbnail" src="./static/img/demo/common_2.jpg" alt="Common Sense 2" onclick="showDetail('common-sense', 'item2')">
+                <img class="top-thumbnail" src="./static/img/demo/common_3.jpg" alt="Common Sense 3" onclick="showDetail('common-sense', 'item3')">
+                <img class="top-thumbnail" src="./static/img/demo/common_4.png" alt="Common Sense 4" onclick="showDetail('common-sense', 'item4')">
+                <img class="top-thumbnail" src="./static/img/demo/common_5.jpg" alt="Common Sense 5" onclick="showDetail('common-sense', 'item5')">
+                <img class="top-thumbnail" src="./static/img/demo/common_6.jpg" alt="Common Sense 6" onclick="showDetail('common-sense', 'item6')">
+                <img class="top-thumbnail" src="./static/img/demo/common_7.jpg" alt="Common Sense 7" onclick="showDetail('common-sense', 'item7')">
+                <img class="top-thumbnail" src="./static/img/demo/common_8.jpg" alt="Common Sense 8" onclick="showDetail('common-sense', 'item8')">
+                <img class="top-thumbnail" src="./static/img/demo/common_9.jpg" alt="Common Sense 9" onclick="showDetail('common-sense', 'item9')">
+                <img class="top-thumbnail" src="./static/img/demo/common_10.jpg" alt="Common Sense 10" onclick="showDetail('common-sense', 'item10')">
+                <img class="top-thumbnail" src="./static/img/demo/common_11.jpg" alt="Common Sense 11" onclick="showDetail('common-sense', 'item11')">
+                <img class="top-thumbnail" src="./static/img/demo/common_12.jpg" alt="Common Sense 12" onclick="showDetail('common-sense', 'item12')">
+                                    </div>
+                            
+            <!-- Logic Thumbnails -->
+            <div id="logic-thumbnails" class="thumbnail-row" style="display: none;">
+                <img class="top-thumbnail" src="./static/img/demo/logic_1.png" alt="Logic 1" onclick="showDetail('logic', 'item1')">
+                <img class="top-thumbnail" src="./static/img/demo/logic_2.png" alt="Logic 2" onclick="showDetail('logic', 'item2')">
+                <img class="top-thumbnail" src="./static/img/demo/logic_3.png" alt="Logic 3" onclick="showDetail('logic', 'item3')">
+                <img class="top-thumbnail" src="./static/img/demo/logic_4.png" alt="Logic 4" onclick="showDetail('logic', 'item4')">
+                <img class="top-thumbnail" src="./static/img/demo/logic_5.png" alt="Logic 5" onclick="showDetail('logic', 'item5')">
+                <img class="top-thumbnail" src="./static/img/demo/logic_6.jpg" alt="Logic 6" onclick="showDetail('logic', 'item6')">
+                <img class="top-thumbnail" src="./static/img/demo/logic_7.png" alt="Logic 7" onclick="showDetail('logic', 'item7')">
+                <img class="top-thumbnail" src="./static/img/demo/logic_8.png" alt="Logic 8" onclick="showDetail('logic', 'item8')">
+                <img class="top-thumbnail" src="./static/img/demo/logic_9.jpg" alt="Logic 9" onclick="showDetail('logic', 'item9')">
+                <img class="top-thumbnail" src="./static/img/demo/logic_10.png" alt="Logic 10" onclick="showDetail('logic', 'item10')">
+                <img class="top-thumbnail" src="./static/img/demo/logic_11.png" alt="Logic 11" onclick="showDetail('logic', 'item11')">
+                <img class="top-thumbnail" src="./static/img/demo/logic_12.png" alt="Logic 12" onclick="showDetail('logic', 'item12')">
+                        </div>
+                    </div>    
+
+        <!-- Detail View - Always Visible -->
+        <div id="detail-view" class="detail-container">
+            <div class="detail-content">
+                <div class="left-panel">
+                    <div class="data-chart" id="data-chart">
+                        Original Data Chart Placeholder
+                </div>
+                
+                    <div class="prompt-section">
+                        <h3>Prompt:</h3>
+                        <div class="prompt-text" id="prompt-text">
+                            Generate a detailed scientific diagram showing the molecular structure of water, including accurate bond angles and electron cloud representations. Use clear labels and a clean, academic style suitable for a chemistry textbook.
+                        </div>
+                    </div>
+                    </div>
+                
+                <div class="right-panel">
+                    <div class="model-result">
+                        <div class="model-name nano">Nano Banana</div>
+                        <div class="generated-image" id="nano-result">
+                            Generated Image Placeholder
+            </div>
+            </div>
+
+                    <div class="model-result">
+                        <div class="model-name gpt">GPT-5</div>
+                        <div class="generated-image" id="gpt-result">
+                            Generated Image Placeholder
+                        </div>
+                </div>
+        
+                    <div class="model-result">
+                        <div class="model-name bagel">BAGEL-Think</div>
+                        <div class="generated-image" id="bagel-result">
+                            Generated Image Placeholder
+                            </div>
+                        </div>
+    
+                    <div class="model-result">
+                        <div class="model-name qwen">Qwen-Image</div>
+                        <div class="generated-image" id="qwen-result">
+                            Generated Image Placeholder
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <script>
+            let currentCategory = 'natural-science';
+            
+            // Sample data for different categories and items
+            const sampleData = {
+                'natural-science': {
+                    'item1': {
+                        chart: './static/img/demo/science_1.jpg',
+                        reasoning_type: 'Temporal',
+                        prompt: 'What this methylene blue and titanium dioxide solution will look like after 30 minutes under UV light exposure.',
+                        nano: './static/img/nano/science_1.png',
+                        gpt: './static/img/gpt/science_1.png',
+                        bagel: './static/img/bagel/science_1.png',
+                        qwen: './static/img/qwen/science_1.png'
+                    },
+                    'item2': {
+                        chart: './static/img/demo/science_2.jpg',
+                        reasoning_type: 'Temporal',
+                        prompt: 'What will these iron nails look like after soaking in 3% saltwater for 4 hours?',
+                        nano: './static/img/nano/science_2.png',
+                        gpt: './static/img/gpt/science_2.png',
+                        bagel: './static/img/bagel/science_2.png',
+                        qwen: './static/img/qwen/science_2.png'
+                    },
+                    'item3': {
+                        chart: './static/img/demo/science_3.jpg',
+                        reasoning_type: 'Temporal',
+                        prompt: 'Show what these two candles will look like after 2 hours, with the left candle in normal air and the right candle partially enclosed to restrict airflow.',
+                        nano: './static/img/nano/science_3.png',
+                        gpt: './static/img/gpt/science_3.png',
+                        bagel: './static/img/bagel/science_3.png',
+                        qwen: './static/img/qwen/science_3.png'
+                    },
+                    'item4': {
+                        chart: './static/img/demo/science_4.jpg',
+                        reasoning_type: 'Spatial',
+                        prompt: 'Generate what happens when a beam of white light passes through this triangular glass prism.',
+                        nano: './static/img/nano/science_4.png',
+                        gpt: './static/img/gpt/science_4.png',
+                        bagel: './static/img/bagel/science_4.png',
+                        qwen: './static/img/qwen/science_4.png'
+                    },
+                    'item5': {
+                        chart: './static/img/demo/science_5.jpg',
+                        reasoning_type: 'Spatial',
+                        prompt: 'Predict the visual effect when this glass is replaced with a concave lens of the same size.',
+                        nano: './static/img/nano/science_5.png',
+                        gpt: './static/img/gpt/science_5.png',
+                        bagel: './static/img/bagel/science_5.png',
+                        qwen: './static/img/qwen/science_5.png'
+                    },
+                    'item6': {
+                        chart: './static/img/demo/science_6.jpg',
+                        reasoning_type: 'Causal',
+                        prompt: 'Predict what happens when one wooden block is removed from the third layer (counting from bottom) of this tower.',
+                        nano: './static/img/nano/science_6.png',
+                        gpt: './static/img/gpt/science_6.png',
+                        bagel: './static/img/bagel/science_6.png',
+                        qwen: './static/img/qwen/science_6.png'
+                    },
+                    'item7': {
+                        chart: './static/img/demo/science_7.jpg',
+                        reasoning_type: 'Causal',
+                        prompt: 'Predict how this leaf cross-section would look after the leaf has undergone severe drought stress that causes plasmolysis in the mesophyll cells.',
+                        nano: './static/img/nano/science_7.png',
+                        gpt: './static/img/gpt/science_7.png',
+                        bagel: './static/img/bagel/science_7.png',
+                        qwen: './static/img/qwen/science_7.png'
+                    },
+                    'item8': {
+                        chart: './static/img/demo/science_8.jpg',
+                        reasoning_type: 'Causal',
+                        prompt: 'Predict what the plastic water bottle will look like after being left half-full, capped tightly, and placed in a freezer overnight.',
+                        nano: './static/img/nano/science_8.png',
+                        gpt: './static/img/gpt/science_8.png',
+                        bagel: './static/img/bagel/science_8.png',
+                        qwen: './static/img/qwen/science_8.png'
+                    },
+                    'item9': {
+                        chart: './static/img/demo/science_9.jpg',
+                        reasoning_type: 'Synthetic',
+                        prompt: 'What this preserved microscopic specimen would look like as a living organism in its natural environment.',
+                        nano: './static/img/nano/science_9.png',
+                        gpt: './static/img/gpt/science_9.png',
+                        bagel: './static/img/bagel/science_9.png',
+                        qwen: './static/img/qwen/science_9.png'
+                    },  
+                    'item10': {
+                        chart: './static/img/demo/science_10.jpg',
+                        reasoning_type: 'Quantitative',
+                        prompt: 'Generate this garden scene with yellow flowers increased to match the number of red flowers.',
+                        nano: './static/img/nano/science_10.png',
+                        gpt: './static/img/gpt/science_10.png',
+                        bagel: './static/img/bagel/science_10.png',
+                        qwen: './static/img/qwen/science_10.png'
+                    },
+                    'item11': {
+                        chart: './static/img/demo/science_11.jpg',
+                        reasoning_type: 'Synthetic',
+                        prompt: 'Generate what this pressed botanical specimen would look like as a living plant in its natural state.',
+                        nano: './static/img/nano/science_11.png',
+                        gpt: './static/img/gpt/science_11.png',
+                        bagel: './static/img/bagel/science_11.png',
+                        qwen: './static/img/qwen/science_11.png'
+                    },
+                    'item12': {
+                        chart: './static/img/demo/science_12.jpg',
+                        reasoning_type: 'Quantitative',
+                        prompt: 'Generate this scene with 3 total insects of the same type feeding on different flowers.',
+                        nano: './static/img/nano/science_12.png',
+                        gpt: './static/img/gpt/science_12.png',
+                        bagel: './static/img/bagel/science_12.png',
+                        qwen: './static/img/qwen/science_12.png'
+                    }
+                },
+                'culture-art': {
+                    'item1': {
+                        chart: './static/img/demo/culture_1.jpg',
+                        reasoning_type: 'Temporal',
+                        prompt: 'Show this floral arrangement after the flowers have wilted and faded in oil painting style.',
+                        nano: './static/img/nano/culture_1.png',
+                        gpt: './static/img/gpt/culture_1.png',
+                        bagel: './static/img/bagel/culture_1.png',
+                        qwen: './static/img/qwen/culture_1.png'
+                    },
+                    'item2': {
+                        chart: './static/img/demo/culture_2.jpg',
+                        reasoning_type: 'Temporal',
+                        prompt: 'Show this woman as she would appear 30 years later while maintaining the portrait style and setting.',
+                        nano: './static/img/nano/culture_2.png',
+                        gpt: './static/img/gpt/culture_2.png',
+                        bagel: './static/img/bagel/culture_2.png',
+                        qwen: './static/img/qwen/culture_2.png'
+                    },
+                    'item3': {
+                        chart: './static/img/demo/culture_3.jpg',
+                        reasoning_type: 'Spatial',
+                        prompt: 'Show the front entrance view of the tower building on the right while preserving the winter painting style',
+                        nano: './static/img/nano/culture_3.png',
+                        gpt: './static/img/gpt/culture_3.png',
+                        bagel: './static/img/bagel/culture_3.png',
+                        qwen: './static/img/qwen/culture_3.png'
+                    },
+                    'item4': {
+                        chart: './static/img/demo/culture_4.jpg',
+                        reasoning_type: 'Spatial',
+                        prompt: 'From the viewpoint of a person seated in a small wooden barge directly beneath the central arch of the bridge, generate the water-level scene looking outward.',
+                        nano: './static/img/nano/culture_4.png',
+                        gpt: './static/img/gpt/culture_4.png',
+                        bagel: './static/img/bagel/culture_4.png',
+                        qwen: './static/img/qwen/culture_4.png'
+                    },
+                    'item5': {
+                        chart: './static/img/demo/culture_5.jpg',
+                        reasoning_type: 'Causal',
+                        prompt: 'Generate the scene showing these figures preparing to depart after their rest.',
+                        nano: './static/img/nano/culture_5.png',
+                        gpt: './static/img/gpt/culture_5.png',
+                        bagel: './static/img/bagel/culture_5.png',
+                        qwen: './static/img/qwen/culture_5.png'
+                    },
+                    'item6': {
+                        chart: './static/img/demo/culture_6.jpg',
+                        reasoning_type: 'Causal',
+                        prompt: 'Show these grinding tools being used for their intended purpose.',
+                        nano: './static/img/nano/culture_6.png',
+                        gpt: './static/img/gpt/culture_6.png',
+                        bagel: './static/img/bagel/culture_6.png',
+                        qwen: './static/img/qwen/culture_6.png'
+                    },
+                    'item7': {
+                        chart: './static/img/demo/culture_7.jpg',
+                        reasoning_type: 'Synthetic',
+                        prompt: 'Show this elegant woman in an outdoor social setting while preserving the classical painting style.',
+                        nano: './static/img/nano/culture_7.png',
+                        gpt: './static/img/gpt/culture_7.png',
+                        bagel: './static/img/bagel/culture_7.png',
+                        qwen: './static/img/qwen/culture_7.png'
+                    },
+                    'item8': {
+                        chart: './static/img/demo/culture_8.jpg',
+                        reasoning_type: 'Synthetic',
+                        prompt: 'Combine all four classical figures into a single unified composition.',
+                        nano: './static/img/nano/culture_8.png',
+                        gpt: './static/img/gpt/culture_8.png',
+                        bagel: './static/img/bagel/culture_8.png',
+                        qwen: './static/img/qwen/culture_8.png'
+                    },
+                    'item9': {
+                        chart: './static/img/demo/culture_9.jpg',
+                        reasoning_type: 'Synthetic',
+                        prompt: 'Re-imagine this Japanese ikebana arrangement as it would appear in a 17th-century Dutch Golden Age still-life painting.',
+                        nano: './static/img/nano/culture_9.png',
+                        gpt: './static/img/gpt/culture_9.png',
+                        bagel: './static/img/bagel/culture_9.png',
+                        qwen: './static/img/qwen/culture_9.png'
+                    },
+                    'item10': {
+                        chart: './static/img/demo/culture_10.jpg',
+                        reasoning_type: 'Synthetic',
+                        prompt: 'Re-imagine this Impressionist riverside landscape as an Edo-period Japanese ukiyo-e woodblock print.',
+                        nano: './static/img/nano/culture_10.png',
+                        gpt: './static/img/gpt/culture_10.png',
+                        bagel: './static/img/bagel/culture_10.png',
+                        qwen: './static/img/qwen/culture_10.png'
+                    },
+                    'item11': {
+                        chart: './static/img/demo/culture_11.jpg',
+                        reasoning_type: 'Quantitative',
+                        prompt: 'Generate this portrait with fruit quantity increased to the next prime number.',
+                        nano: './static/img/nano/culture_11.png',
+                        gpt: './static/img/gpt/culture_11.png',
+                        bagel: './static/img/bagel/culture_11.png',
+                        qwen: './static/img/qwen/culture_11.png'
+                    },
+                    'item12': {
+                        chart: './static/img/demo/culture_12.jpg',
+                        reasoning_type: 'Quantitative',
+                        prompt: 'Generate this 19th-century still-life floral painting with a prime number of visible blossoms—while preserving the same dark background, earthenware jug, muted palette, and impressionist brushwork.',
+                        nano: './static/img/nano/culture_12.png',
+                        gpt: './static/img/gpt/culture_12.png',
+                        bagel: './static/img/bagel/culture_12.png',
+                        qwen: './static/img/qwen/culture_12.png'
+                    }
+                },
+                'common-sense': {
+                    'item1': {
+                        chart: './static/img/demo/common_1.jpg',
+                        reasoning_type: 'Temporal',
+                        prompt: 'Show this windmill structure after 50 years of abandonment and weathering.',
+                        nano: './static/img/nano/common_1.png',
+                        gpt: './static/img/gpt/common_1.png',
+                        bagel: './static/img/bagel/common_1.png',
+                        qwen: './static/img/qwen/common_1.png'
+                    },
+                    'item2': {
+                        chart: './static/img/demo/common_2.jpg',
+                        reasoning_type: 'Temporal',
+                        prompt: 'Render this lighthouse scene 6 hours earlier.',
+                        nano: './static/img/nano/common_2.png',
+                        gpt: './static/img/gpt/common_2.png',
+                        bagel: './static/img/bagel/common_2.png',
+                        qwen: './static/img/qwen/common_2.png'
+                    },
+                    'item3': {
+                        chart: './static/img/demo/common_3.jpg',
+                        reasoning_type: 'Temporal',
+                        prompt: 'Display this street scene 5 seconds later showing the new position of the person.',
+                        nano: './static/img/nano/common_3.png',
+                        gpt: './static/img/gpt/common_3.png',
+                        bagel: './static/img/bagel/common_3.png',
+                        qwen: './static/img/qwen/common_3.png'
+                    },
+                    'item4': {
+                        chart: './static/img/demo/common_4.png',
+                        reasoning_type: 'Spatial',
+                        prompt: 'Generate the view from the office room entrance looking into the room.',
+                        nano: './static/img/nano/common_4.png',
+                        gpt: './static/img/gpt/common_4.png',
+                        bagel: './static/img/bagel/common_4.png',
+                        qwen: './static/img/qwen/common_4.png'
+                    },
+                    'item5': {
+                        chart: './static/img/demo/common_5.jpg',
+                        reasoning_type: 'Spatial',
+                        prompt: 'Generate this white building as a 3D model in Cities: Skylines game style.',
+                        nano: './static/img/nano/common_5.png',
+                        gpt: './static/img/gpt/common_5.png',
+                        bagel: './static/img/bagel/common_5.png',
+                        qwen: './static/img/qwen/common_5.png'
+                    },
+                    'item6': {
+                        chart: './static/img/demo/common_6.jpg',
+                        reasoning_type: 'Spatial',
+                        prompt: 'Create a hand-drawn architectural floor plan of this living room layout including all furniture.',
+                        nano: './static/img/nano/common_6.png',
+                        gpt: './static/img/gpt/common_6.png',
+                        bagel: './static/img/bagel/common_6.png',
+                        qwen: './static/img/qwen/common_6.png'
+                    },
+                    'item7': {
+                        chart: './static/img/demo/common_7.jpg',
+                        reasoning_type: 'Causal',
+                        prompt: 'Generate the scene showing the bowling pins after this ball thrown toward the right hits them.',
+                        nano: './static/img/nano/common_7.png',
+                        gpt: './static/img/gpt/common_7.png',
+                        bagel: './static/img/bagel/common_7.png',
+                        qwen: './static/img/qwen/common_7.png'
+                    },
+                    'item8': {
+                        chart: './static/img/demo/common_8.jpg',
+                        reasoning_type: 'Causal',
+                        prompt: 'Generate this person reaction and actions when his bus arrives at the stop.',
+                        nano: './static/img/nano/common_8.png',
+                        gpt: './static/img/gpt/common_8.png',
+                        bagel: './static/img/bagel/common_8.png',
+                        qwen: './static/img/qwen/common_8.png'
+                    },
+                    'item9': {
+                        chart: './static/img/demo/common_9.jpg',
+                        reasoning_type: 'Synthetic',
+                        prompt: 'Show a 1990s-era train passing under this stone bridge.',
+                        nano: './static/img/nano/common_9.png',
+                        gpt: './static/img/gpt/common_9.png',
+                        bagel: './static/img/bagel/common_9.png',
+                        qwen: './static/img/qwen/common_9.png'
+                    },
+                    'item10': {
+                        chart: './static/img/demo/common_10.jpg',
+                        reasoning_type: 'Synthetic',
+                        prompt: 'Transform all the fruits shown into an arranged fruit platter presentation.',
+                        nano: './static/img/nano/common_10.png',
+                        gpt: './static/img/gpt/common_10.png',
+                        bagel: './static/img/bagel/common_10.png',
+                        qwen: './static/img/qwen/common_10.png'
+                    },
+                    'item11': {
+                        chart: './static/img/demo/common_11.jpg',
+                        reasoning_type: 'Quantitative',
+                        prompt: 'Put 4 of the scattered coffee beans back into the bowl',
+                        nano: './static/img/nano/common_11.png',
+                        gpt: './static/img/gpt/common_11.png',
+                        bagel: './static/img/bagel/common_11.png',
+                        qwen: './static/img/qwen/common_11.png'
+                    },
+                    'item12': {
+                        chart: './static/img/demo/common_12.jpg',
+                        reasoning_type: 'Quantitative',
+                        prompt: 'After preparing two cups of fresh lemonade with 2 lemons, remove the lemons that were used and show the still-life scene with the remaining whole lemons in the white basket.',
+                        nano: './static/img/nano/common_12.png',
+                        gpt: './static/img/gpt/common_12.png',
+                        bagel: './static/img/bagel/common_12.png',
+                        qwen: './static/img/qwen/common_12.png'
+                    }
+                },
+                'logic': {
+                    'item1': {
+                        chart: './static/img/demo/logic_1.png',
+                        reasoning_type: 'Abstract',
+                        prompt: 'Generate the missing shape for the bottom-right position in this 3x3 matrix pattern.',
+                        nano: './static/img/nano/logic_1.png',
+                        gpt: './static/img/gpt/logic_1.png',
+                        bagel: './static/img/bagel/logic_1.png',
+                        qwen: './static/img/qwen/logic_1.png'
+                    },
+                    'item2': {
+                        chart: './static/img/demo/logic_2.png',
+                        reasoning_type: 'Abstract',
+                        prompt: 'Generate the missing shape for the bottom-right position in this 3x3 matrix pattern.',
+                        nano: './static/img/nano/logic_2.png',
+                        gpt: './static/img/gpt/logic_2.png',
+                        bagel: './static/img/bagel/logic_2.png',
+                        qwen: './static/img/qwen/logic_2.png'
+                    },
+                    'item3': {
+                        chart: './static/img/demo/logic_3.png',
+                        reasoning_type: 'Abstract',
+                        prompt: 'Arrange the three available pieces (A, B, and C) to completely fill the 3x3 tangram board.',
+                        nano: './static/img/nano/logic_3.png',
+                        gpt: './static/img/gpt/logic_3.png',
+                        bagel: './static/img/bagel/logic_3.png',
+                        qwen: './static/img/qwen/logic_3.png'
+                    },
+                    'item4': {
+                        chart: './static/img/demo/logic_4.png',
+                        reasoning_type: 'Abstract',
+                        prompt: 'Generate the next logical move in this tic-tac-toe game for player O.',
+                        nano: './static/img/nano/logic_4.png',
+                        gpt: './static/img/gpt/logic_4.png',
+                        bagel: './static/img/bagel/logic_4.png',
+                        qwen: './static/img/qwen/logic_4.png'
+                    },
+                    'item5': {
+                        chart: './static/img/demo/logic_5.png',
+                        reasoning_type: 'Mathematical',
+                        prompt: 'Generate this image with the missing width measurement labeled on the third geometric shape.',
+                        nano: './static/img/nano/logic_5.png',
+                        gpt: './static/img/gpt/logic_5.png',
+                        bagel: './static/img/bagel/logic_5.png',
+                        qwen: './static/img/qwen/logic_5.png'
+                    },
+                    'item6': {
+                        chart: './static/img/demo/logic_6.jpg',
+                        reasoning_type: 'Abstract',
+                        prompt: 'Generate the solution path marked in red for this maze from the green start position to the E.',
+                        nano: './static/img/nano/logic_6.png',
+                        gpt: './static/img/gpt/logic_6.png',
+                        bagel: './static/img/bagel/logic_6.png',
+                        qwen: './static/img/qwen/logic_6.png'
+                    },
+                    'item7': {
+                        chart: './static/img/demo/logic_7.png',
+                        reasoning_type: 'Mathematical',
+                        prompt: 'Find z. Please annotate your answer directly on the image.',
+                        nano: './static/img/nano/logic_7.png',
+                        gpt: './static/img/gpt/logic_7.png',
+                        bagel: './static/img/bagel/logic_7.png',
+                        qwen: './static/img/qwen/logic_7.png'
+                    },
+                    'item8': {
+                        chart: './static/img/demo/logic_8.png',
+                        reasoning_type: 'Abstract',
+                        prompt: 'Complete this arrangement into a full 5×5 grid, with the added blocks shown in black.',
+                        nano: './static/img/nano/logic_8.png',
+                        gpt: './static/img/gpt/logic_8.png',
+                        bagel: './static/img/bagel/logic_8.png',
+                        qwen: './static/img/qwen/logic_8.png'
+                    },
+                    'item9': {
+                        chart: './static/img/demo/logic_9.jpg',
+                        reasoning_type: 'Abstract',
+                        prompt: 'Generate this 3D scene with all small spheres and green metallic objects removed.',
+                        nano: './static/img/nano/logic_9.png',
+                        gpt: './static/img/gpt/logic_9.png',
+                        bagel: './static/img/bagel/logic_9.png',
+                        qwen: './static/img/qwen/logic_9.png'
+                    },
+                    'item10': {
+                        chart: './static/img/demo/logic_10.png',
+                        reasoning_type: 'Mathematical',
+                        prompt: 'Generate the next iteration in this fractal pattern sequence.',
+                        nano: './static/img/nano/logic_10.png',
+                        gpt: './static/img/gpt/logic_10.png',
+                        bagel: './static/img/bagel/logic_10.png',
+                        qwen: './static/img/qwen/logic_10.png'
+                    },
+                    'item11': {
+                        chart: './static/img/demo/logic_11.png',
+                        reasoning_type: 'Mathematical',
+                        prompt: 'Generate the view of this 3D structure from the direction indicated by the arrow',
+                        nano: './static/img/nano/logic_11.png',
+                        gpt: './static/img/gpt/logic_11.png',
+                        bagel: './static/img/bagel/logic_11.png',
+                        qwen: './static/img/qwen/logic_11.png'
+                    },
+                    'item12': {
+                        chart: './static/img/demo/logic_12.png',
+                        reasoning_type: 'Mathematical',
+                        prompt: 'Find x. Assume that segments that appear to be tangent are tangent. Please annotate your answer directly on the image.',
+                        nano: './static/img/nano/logic_12.png',
+                        gpt: './static/img/gpt/logic_12.png',
+                        bagel: './static/img/bagel/logic_12.png',
+                        qwen: './static/img/qwen/logic_12.png'
+                    }
+                }
+            };
+    
+            function showCategory(category) {
+    // Hide all thumbnail rows
+                document.querySelectorAll('.thumbnail-row').forEach(container => {
+                    container.style.display = 'none';
+                });
+                
+                // Show selected category
+                document.getElementById(category + '-thumbnails').style.display = 'flex';
+                
+                // Update active button
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                event.target.classList.add('active');
+                
+                currentCategory = category;
+                
+                // Load first item of the category by default
+                showDetail(category, 'item1');
+            }
+
+                function showDetail(category, item) {
+                // Update content based on selected item
+                const data = sampleData[category] && sampleData[category][item];
+                if (data) {
+                    document.getElementById('data-chart').innerHTML = `
+                        <img src="${data.chart}" alt="Data Chart" style="max-width: 100%; max-height: 250px; object-fit: contain;">
+                        <div class="reasoning-type-label">${data.reasoning_type || 'Temporal'}</div>
+                    `;
+                    document.getElementById('prompt-text').textContent = data.prompt;
+                    document.getElementById('nano-result').innerHTML = `<img src="${data.nano}" alt="Nano Banana Result" style="max-width: 200px; max-height: 200px; object-fit: contain;">`;
+                    document.getElementById('gpt-result').innerHTML = `<img src="${data.gpt}" alt="GPT Result" style="max-width: 200px; max-height: 200px; object-fit: contain;">`;
+                    document.getElementById('bagel-result').innerHTML = `<img src="${data.bagel}" alt="BAGEL-Think Result" style="max-width: 200px; max-height: 200px; object-fit: contain;">`;
+                    document.getElementById('qwen-result').innerHTML = `<img src="${data.qwen}" alt="Qwen-Image Result" style="max-width: 200px; max-height: 200px; object-fit: contain;">`;
+                }
+            }
+    
+            function backToThumbnails() {
+                document.getElementById('detail-view').style.display = 'none';
+                document.getElementById(currentCategory + '-thumbnails').style.display = 'grid';
+            }
+            showDetail('natural-science', 'item1');
+            
+            // ROVER-IG Data Statistics
+            function createSankeyChart() {
+                console.log('Creating Sankey chart...');
+                // ROVER-IG 数据
+                const igData = {
+                    'main_categories': [
+                        {
+                            'name': 'Natural Science',
+                            'color': '#4DBEAA',
+                            'sub_categories': [
+                                {'name': 'Temporal', 'count': 54},
+                                {'name': 'Spatial', 'count': 32},
+                                {'name': 'Causal', 'count': 31},
+                                {'name': 'Synthetic', 'count': 46},
+                                {'name': 'Quantitative', 'count': 60}
+                            ]
+                        },
+                        {
+                            'name': 'Culture Art',
+                            'color': '#FF7FB3',
+                            'sub_categories': [
+                                {'name': 'Temporal', 'count': 46},
+                                {'name': 'Spatial', 'count': 61},
+                                {'name': 'Causal', 'count': 40},
+                                {'name': 'Synthetic', 'count': 100},
+                                {'name': 'Quantitative', 'count': 47}
+                            ]
+                        },
+                        {
+                            'name': 'Common Sense',
+                            'color': '#5DADE2',
+                            'sub_categories': [
+                                {'name': 'Temporal', 'count': 55},
+                                {'name': 'Spatial', 'count': 97},
+                                {'name': 'Causal', 'count': 35},
+                                {'name': 'Synthetic', 'count': 37},
+                                {'name': 'Quantitative', 'count': 23}
+                            ]
+                        },
+                        {
+                            'name': 'Logic',
+                            'color': '#FFB347',
+                            'sub_categories': [
+                                {'name': 'Abstract', 'count': 80},
+                                {'name': 'Math', 'count': 60}
+                            ]
+                        }
+                    ]
+                };
+
+                // 计算总数
+                let totalAll = 0;
+                for (let cat of igData.main_categories) {
+                    for (let sub of cat.sub_categories) {
+                        totalAll += sub.count;
+                    }
+                }
+
+                let labels = [];
+                let colors = [];
+                let customdata = [];
+
+                // 第一层：ROVER-IG根节点
+                let rootIdx = 0;
+                labels.push("<b><span style='font-size: 14px'>Verbally-augmented Reasoning</span><br><span style='font-size: 14px'>for Visual Generation</span><br><br><span style='font-size: 14px'>ROVER-IG</span>");
+                colors.push('#9370DB');
+                customdata.push(`<b>ROVER-IG</b><br>Total Count: ${totalAll}<br>Categories: 4`);
+
+                // 第二层：Domains
+                let domainIndices = {};
+                let domainTotals = {};
+                for (let cat of igData.main_categories) {
+                    let total = cat.sub_categories.reduce((sum, sub) => sum + sub.count, 0);
+                    domainTotals[cat.name] = total;
+                    let percentage = (total / totalAll) * 100;
+
+                    domainIndices[cat.name] = labels.length;
+                    labels.push(`<b>${cat.name}</b><br>${percentage.toFixed(1)}%`);
+                    colors.push(cat.color);
+                    customdata.push(`<b>${cat.name}</b><br>Count: ${total}`);
+                }
+
+                // 第三层：7种Reasoning类型
+                let reasoningList = ['Temporal', 'Spatial', 'Causal', 'Synthetic', 'Quantitative', 'Abstract', 'Math'];
+                let reasoningIndices = {};
+                let reasoningTotals = {};
+                for (let r of reasoningList) {
+                    reasoningTotals[r] = 0;
+                }
+
+                // 计算每种reasoning的总数
+                for (let cat of igData.main_categories) {
+                    for (let sub of cat.sub_categories) {
+                        if (reasoningTotals.hasOwnProperty(sub.name)) {
+                            reasoningTotals[sub.name] += sub.count;
+                        }
+                    }
+                }
+
+                // 创建reasoning节点
+                for (let reasoningName of reasoningList) {
+                    reasoningIndices[reasoningName] = labels.length;
+                    let total = reasoningTotals[reasoningName];
+                    let percentage = (total / totalAll) * 100;
+                    labels.push(`<span style="font-weight: bold">${reasoningName}</span><br><span style="font-weight: bold">${percentage.toFixed(1)}%</span>`);
+                    colors.push('#E0E0E0');
+                    customdata.push(`<b>${reasoningName}</b><br>Count: ${total}`);
+                }
+
+                // 创建链接
+                let sources = [];
+                let targets = [];
+                let values = [];
+                let linkColors = [];
+                let linkCustomdata = [];
+
+                // 第一层到第二层：ROVER-IG -> Domains
+                for (let cat of igData.main_categories) {
+                    let domainIdx = domainIndices[cat.name];
+                    let total = domainTotals[cat.name];
+
+                    sources.push(rootIdx);
+                    targets.push(domainIdx);
+                    values.push(total);
+                    linkColors.push('rgba(147, 112, 219, 0.4)');
+                    linkCustomdata.push(`<b>ROVER-IG → ${cat.name}</b><br>Count: ${total}`);
+                }
+
+                // 第二层到第三层：Domains -> Reasoning
+                for (let cat of igData.main_categories) {
+                    let domainIdx = domainIndices[cat.name];
+
+                    for (let sub of cat.sub_categories) {
+                        if (reasoningIndices.hasOwnProperty(sub.name)) {
+                            let reasoningIdx = reasoningIndices[sub.name];
+
+                            sources.push(domainIdx);
+                            targets.push(reasoningIdx);
+                            values.push(sub.count);
+                            linkColors.push(hexToRgba(cat.color, 0.5));
+                            linkCustomdata.push(`<b>${cat.name} → ${sub.name}</b><br>Count: ${sub.count}`);
+                        }
+                    }
+                }
+
+                // 创建Sankey图
+                let data = [{
+                    type: "sankey",
+                    arrangement: "freeform",
+                    node: {
+                        pad: 12,
+                        thickness: 8,
+                        line: {color: "white", width: 1},
+                        label: labels,
+                        color: colors,
+                        customdata: customdata,
+                        hovertemplate: '%{customdata}<extra></extra>'
+                    },
+                    link: {
+                        source: sources,
+                        target: targets,
+                        value: values,
+                        color: linkColors,
+                        customdata: linkCustomdata,
+                        hovertemplate: '%{customdata}<extra></extra>'
+                    }
+                }];
+
+                let layout = {
+                    title: {
+                        text: '<b>ROVER-IG Structure</b>',
+                        x: 0.5,
+                        xanchor: 'center',
+                        font: {size: 18, family: 'Palatino', color: '#333333'}
+                    },
+                    font: {size: 10, family: 'Palatino', color: '#333333'},
+                    height: 250,
+                    width: 450,
+                    margin: {l: 0, r: 0, t: 30, b: 10, pad: 0},
+                    plot_bgcolor: '#FAFAFA',
+                    paper_bgcolor: 'white',
+                    autosize: true,
+                    showlegend: false,
+                    hoverlabel: {
+                        bgcolor: 'rgba(255, 255, 255, 0.9)',
+                        bordercolor: 'rgba(0, 0, 0, 0.1)',
+                        font: {
+                            family: 'Palatino',
+                            size: 12,
+                            color: '#333333'
+                        }
+                    }
+                };
+
+                let config = {
+                    responsive: true,
+                    displayModeBar: false
+                };
+
+                console.log('Plotting Sankey chart with data:', data);
+                Plotly.newPlot('sankey-chart-ig', data, layout, config);
+                
+                // 创建ROVER-TG图表
+                createROVERTGChart();
+                
+            }
+
+            function createROVERTGChart() {
+                console.log('Creating ROVER-TG Sankey chart...');
+                // ROVER-TG 数据
+                const tgData = {
+                    'main_categories': [
+                        {
+                            'name': 'World Model',
+                            'color': '#90C695',
+                            'sub_categories': [
+                                {'name': 'Embodied', 'count': 46},
+                                {'name': 'Physical', 'count': 32},
+                            ]
+                        },
+                        {
+                            'name': 'Logical\nAssistance',
+                            'color': '#F0D568',
+                            'sub_categories': [
+                                {'name': 'Geometry', 'count': 80},
+                                {'name': 'Puzzles', 'count': 70}
+                            ]
+                        },
+                        {
+                            'name': 'Visual\nPerception',
+                            'color': '#F2B5D4',
+                            'sub_categories': [
+                                {'name': 'Jigsaw', 'count': 78},
+                                {'name': 'Spatial', 'count': 75},
+                            ]
+                        }
+                    ]
+                };
+
+                // 计算总数
+                let totalAll = 0;
+                for (let cat of tgData.main_categories) {
+                    for (let sub of cat.sub_categories) {
+                        totalAll += sub.count;
+                    }
+                }
+
+                let labels = [];
+                let colors = [];
+                let customdata = [];
+
+                // 第一层：ROVER-TG根节点
+                let rootIdx = 0;
+                labels.push("<b><span style='font-size: 14px'>Visually-augmented Reasoning</span><br><span style='font-size: 14px'>for Verbal Generation</span><br><br><span style='font-size: 14px'>ROVER-TG</span>");
+                colors.push('#87CEEB');
+                customdata.push(`<b>ROVER-TG</b><br>Total Count: ${totalAll}<br>Categories: 3`);
+
+                // 第二层：Domains
+                let domainIndices = {};
+                let domainTotals = {};
+                for (let cat of tgData.main_categories) {
+                    let total = cat.sub_categories.reduce((sum, sub) => sum + sub.count, 0);
+                    domainTotals[cat.name] = total;
+                    let percentage = (total / totalAll) * 100;
+
+                    domainIndices[cat.name] = labels.length;
+                    labels.push(`<span style="font-weight: bold">${cat.name}</span><br><span style="font-weight: bold">${percentage.toFixed(1)}%</span>`);
+                    colors.push(cat.color);
+                    customdata.push(`<b>${cat.name}</b><br>Count: ${total}`);
+                }
+
+                // 第三层：6种Reasoning类型
+                let reasoningList = ['Physical', 'Embodied', 'Geometry', 'Puzzles', 'Jigsaw', 'Spatial'];
+                let reasoningIndices = {};
+                let reasoningTotals = {};
+                for (let r of reasoningList) {
+                    reasoningTotals[r] = 0;
+                }
+
+                // 计算每种reasoning的总数
+                for (let cat of tgData.main_categories) {
+                    for (let sub of cat.sub_categories) {
+                        if (reasoningTotals.hasOwnProperty(sub.name)) {
+                            reasoningTotals[sub.name] += sub.count;
+                        }
+                    }
+                }
+
+                // 创建reasoning节点
+                for (let reasoningName of reasoningList) {
+                    reasoningIndices[reasoningName] = labels.length;
+                    let percentage = (reasoningTotals[reasoningName] / totalAll) * 100;
+                    labels.push(`<span style="font-weight: bold">${reasoningName}</span><br><span style="font-weight: bold">${percentage.toFixed(1)}%</span>`);
+                    colors.push('#E8D5B7'); // 更现代的淡褐色
+                    customdata.push(`<b>${reasoningName}</b><br>Count: ${reasoningTotals[reasoningName]}`);
+                }
+
+                // 创建连接
+                let sources = [];
+                let targets = [];
+                let values = [];
+                let linkColors = [];
+                let linkCustomdata = [];
+
+                // 从根节点到主类别
+                for (let cat of tgData.main_categories) {
+                    sources.push(rootIdx);
+                    targets.push(domainIndices[cat.name]);
+                    values.push(domainTotals[cat.name]);
+                    linkColors.push(hexToRgba('#87CEEB', 0.6));
+                    linkCustomdata.push(`<b>ROVER-TG → ${cat.name}</b><br>Count: ${domainTotals[cat.name]}`);
+                }
+
+                // 从主类别到reasoning类型
+                for (let cat of tgData.main_categories) {
+                    for (let sub of cat.sub_categories) {
+                        if (reasoningIndices.hasOwnProperty(sub.name)) {
+                            sources.push(domainIndices[cat.name]);
+                            targets.push(reasoningIndices[sub.name]);
+                            values.push(sub.count);
+                            linkColors.push(hexToRgba(cat.color, 0.6));
+                            linkCustomdata.push(`<b>${cat.name} → ${sub.name}</b><br>Count: ${sub.count}`);
+                        }
+                    }
+                }
+
+                // 创建Sankey图
+                let data = [{
+                    type: "sankey",
+                    arrangement: "freeform",
+                    node: {
+                        pad: 15,
+                        thickness: 8,
+                        line: {color: "white", width: 1},
+                        label: labels,
+                        color: colors,
+                        customdata: customdata,
+                        hovertemplate: '%{customdata}<extra></extra>'
+                    },
+                    link: {
+                        source: sources,
+                        target: targets,
+                        value: values,
+                        color: linkColors,
+                        customdata: linkCustomdata,
+                        hovertemplate: '%{customdata}<extra></extra>'
+                    }
+                }];
+
+                let layout = {
+                    title: {
+                        text: '<b>ROVER-TG Structure</b>',
+                        x: 0.5,
+                        xanchor: 'center',
+                        font: {size: 18, family: 'Palatino', color: '#333333'}
+                    },
+                    font: {size: 10, family: 'Palatino', color: '#333333'},
+                    height: 200,
+                    width: 450,
+                    margin: {l: 0, r: 0, t: 30, b: 10, pad: 0},
+                    plot_bgcolor: '#FAFAFA',
+                    paper_bgcolor: 'white',
+                    autosize: true,
+                    showlegend: false,
+                    hoverlabel: {
+                        bgcolor: 'rgba(255, 255, 255, 0.9)',
+                        bordercolor: 'rgba(0, 0, 0, 0.1)',
+                        font: {
+                            family: 'Palatino',
+                            size: 12,
+                            color: '#333333'
+                        }
+                    }
+                };
+
+                let config = {
+                    responsive: true,
+                    displayModeBar: false
+                };
+
+                console.log('Plotting ROVER-TG Sankey chart with data:', data);
+                Plotly.newPlot('sankey-chart-tg', data, layout, config);
+            }
+
+            function hexToRgba(hex, alpha = 0.5) {
+                hex = hex.replace('#', '');
+                let r = parseInt(hex.substr(0, 2), 16);
+                let g = parseInt(hex.substr(2, 2), 16);
+                let b = parseInt(hex.substr(4, 2), 16);
+                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            }
+            
+
+            // 页面加载完成后创建Sankey图
+            document.addEventListener('DOMContentLoaded', function() {
+                // 确保Plotly已加载
+                function initSankey() {
+                    if (typeof Plotly !== 'undefined') {
+                        try {
+                            createSankeyChart();
+                            console.log('Sankey chart created successfully');
+                        } catch (error) {
+                            console.error('Error creating Sankey chart:', error);
+                            // 显示错误信息
+                            document.getElementById('sankey-chart').innerHTML = 
+                                '<div style="text-align: center; padding: 50px; color: #666;">' +
+                                '<p>图表加载失败，请刷新页面重试</p>' +
+                                '<p style="font-size: 12px;">Error: ' + error.message + '</p>' +
+                                '</div>';
+                        }
+                    } else {
+                        // 如果Plotly还没加载，继续等待
+                        setTimeout(initSankey, 500);
+                    }
+                }
+                initSankey();
+            });
+        </script>
+    </div>
+
+    <div id="rover-demo-tg" class="rover-demo">
+
+        <h3><span class="rover-text"><span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span></span>-TG</h3>
+
+        <div class="category-nav">
+            <button class="category-btn active" onclick="showCategoryTG('world-model')">World Model</button>
+            <button class="category-btn" onclick="showCategoryTG('logic-assistant')">Logic Assistant</button>
+            <button class="category-btn" onclick="showCategoryTG('visual-perception')">Visual Perception</button>
+                </div>
+    
+        <!-- Top Thumbnail Row -->
+        <div class="top-thumbnails">
+            <!-- World Model Thumbnails -->
+            <div id="world-model-thumbnails" class="thumbnail-row">
+                <img class="top-thumbnail" src="./static/img/demo-vr/em_1.png" alt="World Model 1" onclick="showDetailTG('world-model', 'item1')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/em_2.png" alt="World Model 2" onclick="showDetailTG('world-model', 'item2')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/em_3.png" alt="World Model 3" onclick="showDetailTG('world-model', 'item3')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/em_4.png" alt="World Model 4" onclick="showDetailTG('world-model', 'item4')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/em_5.png" alt="World Model 5" onclick="showDetailTG('world-model', 'item5')">
+            </div>
+    
+            <!-- Logic Assistant Thumbnails -->
+            <div id="logic-assistant-thumbnails" class="thumbnail-row" style="display: none;">
+                <img class="top-thumbnail" src="./static/img/demo-vr/log_1.jpg" alt="Logic Assistant 1" onclick="showDetailTG('logic-assistant', 'item1')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/log_2.jpg" alt="Logic Assistant 2" onclick="showDetailTG('logic-assistant', 'item2')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/log_3.jpg" alt="Logic Assistant 3" onclick="showDetailTG('logic-assistant', 'item3')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/log_4.jpg" alt="Logic Assistant 4" onclick="showDetailTG('logic-assistant', 'item4')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/log_5.jpg" alt="Logic Assistant 5" onclick="showDetailTG('logic-assistant', 'item5')">
+        </div>
+    
+            <!-- Visual Perception Thumbnails -->
+            <div id="visual-perception-thumbnails" class="thumbnail-row" style="display: none;">
+                <img class="top-thumbnail" src="./static/img/demo-vr/vis_1.jpg" alt="Visual Perception 1" onclick="showDetailTG('visual-perception', 'item1')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/vis_2.jpg" alt="Visual Perception 2" onclick="showDetailTG('visual-perception', 'item2')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/vis_3.jpg" alt="Visual Perception 3" onclick="showDetailTG('visual-perception', 'item3')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/vis_4.jpg" alt="Visual Perception 4" onclick="showDetailTG('visual-perception', 'item4')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/vis_5.jpg" alt="Visual Perception 5" onclick="showDetailTG('visual-perception', 'item5')">
+    </div>
+</div>
+
+        <!-- Detail View - Always Visible -->
+        <div id="detail-view-tg" class="detail-container">
+            <div class="detail-content">
+                <div class="left-panel">
+                    <div class="data-chart" id="data-chart-tg">
+                        Original Data Chart Placeholder
+    </div>
+
+                    <div class="prompt-section">
+                        <h3>Prompt:</h3>
+                        <div class="prompt-text" id="prompt-text-tg">
+                            Generate a detailed scientific diagram showing the molecular structure of water, including accurate bond angles and electron cloud representations. Use clear labels and a clean, academic style suitable for a chemistry textbook.
+                        </div>
+    </div>
+
+                    <div class="prompt-section">
+                        <h3>Answer:</h3>
+                        <div class="prompt-text" id="answer-text-tg">
+                            Expected answer will be displayed here.
+                </div>
+                </div>
+                </div>
+    
+                <div class="right-panel">
+                    <div class="models-container">
+                        <div class="model-result-tg">
+                            <div class="model-name nano">Nano Banana</div>
+                            <div class="model-output-tg">
+                                <div class="output-image" id="nano-result-tg">
+                                    Generated Image Placeholder
+                </div>
+                                <div class="output-text" id="nano-text-tg">
+                                    Generated text response will appear here...
+                </div>
+                </div>
+            </div>
+
+                        <div class="model-result-tg">
+                            <div class="model-name gpt">GPT-5</div>
+                            <div class="model-output-tg">
+                                <div class="output-image" id="gpt-result-tg">
+                                    Generated Image Placeholder
+                </div>
+                                <div class="output-text" id="gpt-text-tg">
+                                    Generated text response will appear here...
+            </div>
+                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+            let currentCategoryTG = 'world-model';
+            
+            // Sample data for different categories and items
+            const sampleDataTG = {
+                'world-model': {
+                    'item1': {
+                        chart: './static/img/demo-vr/em_1.png',
+                        reasoning_type: 'Embodied',
+                        prompt: 'Generate a 10-point end-effector trajectory visualization for the task: Remove the lid from the blue container. Then output the corresponding action trajectory coordinates (x, y) on the image.',
+                        answer: '[(600,800), (900,700), (1000,550), (1000,480), (1000,450), (1000,430), (1000,250), (1000,150), (1000,100), (950,80)]',
+                        nano: './static/img/nano-vr/em_1.png',
+                        nano_text: 'Generated action trajectory: [(110,700), (280,615), (380,570), (490,530), (615,485), (730,435), (750,400), (900,360), (1065,340), (1055,215)]',
+                        gpt: './static/img/gpt-vr/em_1.png',
+                        gpt_text: 'Generated action trajectory: [(500,820), (760,780), (870,700), (1070,600), (850,440), (990,400), (850,330), (770,210), (950,150), (820,80)]'
+                    },
+                    'item2': {
+                        chart: './static/img/demo-vr/em_2.png',
+                        reasoning_type: 'Embodied',
+                        prompt: 'Generate a 10-point end-effector trajectory visualization for the task: Place the beef in the strainer. Then output the corresponding action trajectory coordinates (x, y) on the image.',
+                        answer: '[(400,450), (500,480), (600,500), (700,520), (750,560), (780,580), (780,600), (780,620), (780,640), (780,660)]',
+                        nano: './static/img/nano-vr/em_2.png',
+                        nano_text: 'Generated action trajectory: [(160,460), (250,470), (340,480), (500,470), (560,500), (630,530), (700,570), (780,600), (880,470), (960,540)]',
+                        gpt: './static/img/gpt-vr/em_2.png',
+                        gpt_text: 'Generated action trajectory: [(530,90), (470,170), (660,200), (760,310), (1000,400), (350,460), (490,560), (680,680), (750,735), (870,680)]'
+                    },
+                    'item3': {
+                        chart: './static/img/demo-vr/em_3.png',
+                        reasoning_type: 'Embodied',
+                        prompt: 'Generate a 10-point end-effector trajectory visualization for the task: Pour water through the coffee filter. Then output the corresponding action trajectory coordinates (x, y) on the image.',
+                        answer: '[(950,520), (950,400), (950,300), (650,320), (480,380), (480,420), (480,440), (480,420), (650,350), (850,400)]',
+                        nano: './static/img/nano-vr/em_3.png',
+                        nano_text: 'Generated action trajectory: [(130,695), (240,655), (300,615), (420,505), (520,330), (835,230), (715,495), (1085,445), (990,515), (1025,540)]',
+                        gpt: './static/img/gpt-vr/em_3.png',
+                        gpt_text: 'Generated action trajectory: [(240,600), (240,500), (180,395), (270,285), (420,120), (615,65), (840,165), (890,275), (1020,380), (980,470)]'
+                    },
+                    'item4': {
+                        chart: './static/img/demo-vr/em_4.png',
+                        reasoning_type: 'Embodied',
+                        prompt: 'Generate a 10-point end-effector trajectory visualization for the task: Put the blue block onto the green car. Then output the corresponding action trajectory coordinates (x, y) on the image.',
+                        answer: '[(850,600), (750,550), (700,600), (700,620), (700,600), (400,550), (250,500), (250,480), (250,500), (350,550)]',
+                        nano: './static/img/nano-vr/em_4.png',
+                        nano_text: 'Generated action trajectory: [(235,450), (285,410), (363,375), (443,318), (530,365), (608,335), (730,400), (780,515), (890,590), (915,630)]',
+                        gpt: './static/img/gpt-vr/em_4.png',
+                        gpt_text: 'Generated action trajectory: [(530,75), (530,350), (750,220), (815,320), (735,400), (650,485), (620,565), (560,655), (525,715), (450,750)]'
+                    },
+                    'item5': {
+                        chart: './static/img/demo-vr/em_5.png',
+                        reasoning_type: 'Embodied',
+                        prompt: 'Generate a 10-point end-effector trajectory visualization for the task: Place the white bowl on the cutting board. Then output the corresponding action trajectory coordinates (x, y) on the image.',
+                        answer: '[(900,350), (900,300), (600,400), (400,500), (300,580), (300,620), (300,640), (300,640), (300,600), (400,500)]',
+                        nano: './static/img/nano-vr/em_5.png',
+                        nano_text: 'Generated action trajectory: [(880,290), (240,455), (245,515), (245,575), (245,635), (560,525), (560,595), (880,415), (850,475), (560,645)]',
+                        gpt: './static/img/gpt-vr/em_5.png',
+                        gpt_text: 'Generated action trajectory: [(575,140), (845,250), (325,220), (325,340), (425,485), (545,525), (635,590), (935,670), (760,760), (810,780)]'
+                    }
+                },
+                'logic-assistant': {
+                    'item1': {
+                        chart: './static/img/demo-vr/log_1.jpg',
+                        reasoning_type: 'Geometry',
+                        prompt: 'Sector OAB is a quarter of a circle of radius 3 cm. A circle is drawn inside this sector, tangent at three points as shown. What is the number of centimeters in the radius of the inscribed circle? Express your answer in simplest radical form.\n\nHint: Draw auxiliary lines to solve the problem. ',
+                        answer: '3(√2 - 1) cm',
+                        nano: './static/img/nano-vr/log_1.png',
+                        nano_text: 'Place the inscribed circle\'s center at (r,r) and use that the collinear points O, C, and tangency point T satisfy OC + r = 3, where OC = r√2, solving to get r = 3(√2-1).\n\nAnswer: 3(√2 - 1) cm',
+                        gpt: './static/img/gpt-vr/log_1.png',
+                        gpt_text: 'Set the distance from the inscribed circle\'s center at (r,r) to the origin equal to 3-r for arc tangency, solving r√2 = 3-r to get r = 3(√2-1).\n\nAnswer: 3(√2 - 1) cm'
+                    },
+                    'item2': {
+                        chart: './static/img/demo-vr/log_2.jpg',
+                        reasoning_type: 'Geometry',
+                        prompt: 'The figure shows two concentric circles. If the length of chord AB is 80 units and chord AB is tangent to the smaller circle, what is the area of the shaded region? Express your answer in terms of π.\n\nHint: Draw auxiliary lines to solve the problem. ',
+                        answer: 'The area of the shaded region is 1600π square units.',
+                        nano: './static/img/nano-vr/log_2.png',
+                        nano_text: 'Draw radius R to point A and perpendicular radius r to chord AB\'s tangency point T, forming right triangle with R² = r² + 40², giving R² - r² = 1600.\n\nAnswer: 1600π square units',
+                        gpt: './static/img/gpt-vr/log_2.png',
+                        gpt_text: 'The perpendicular from center O to tangent chord AB bisects it at T, creating right triangle OTA where R² = r² + 40², so Area = π(R² - r²) = 1600π.\n\nAnswer: 1600π square units'
+                    },
+                    'item3': {
+                        chart: './static/img/demo-vr/log_3.jpg',
+                        reasoning_type: 'Geometry',
+                        prompt: 'The triangle shown is an equilateral triangle with side length 12 cm. A side of the triangle is the diameter of the circle. If the sum of the areas of the two small shaded regions in square centimeters in simplest radical form is aπ - b√c, what is a+b+c? \n\nHint: Draw auxiliary lines to solve the problem. ',
+                        answer: '33',
+                        nano: './static/img/nano-vr/log_3.png',
+                        nano_text: 'Found intersection points P(-3,3√3) and Q(3,3√3) where triangle sides AC and BC meet the circle, calculated each segment using 120° central angle giving (12π - 9√3) per segment.\n\nAnswer: 24π - 18√3, where a+b+c = 45',
+                        gpt: './static/img/gpt-vr/log_3.png',
+                        gpt_text: 'Used 60° central angle from center O to calculate sector minus triangle area, getting (6π - 9√3) per segment, then doubled for two regions.\n\nAnswer: 4π - 6√3, where a+b+c = 13'
+                    },
+                    'item4': {
+                        chart: './static/img/demo-vr/log_4.jpg',
+                        reasoning_type: 'Geometry',
+                        prompt: 'In triangle ABC, AB = 11, AC = 13, and BC = 20. The medians AD, BE, and CF of triangle ABC intersect at the centroid G. Let P be the foot of the altitude from G to BC. Find GP.\n\nHint: Draw auxiliary lines to solve the problem. ',
+                        answer: '11/5',
+                        nano: './static/img/nano-vr/log_4.png',
+                        nano_text: 'Placed D at origin with B(-10,0) and C(10,0), found A(-6/5, 33/5) using distance constraints, calculated centroid G(-2/5, 11/5), and GP equals G\'s y-coordinate.\n\nAnswer: GP = 11/5',
+                        gpt: './static/img/gpt-vr/log_4.png',
+                        gpt_text: 'Placed B at origin with C(20,0), found A(8.8, 6.6) using AB=11 and AC=13, calculated centroid G(9.6, 2.2), and GP equals G\'s y-coordinate.\n\nAnswer: GP = 2.2 (equivalent to 11/5)'
+                    },
+                    'item5': {
+                        chart: './static/img/demo-vr/log_5.jpg',
+                        reasoning_type: 'Puzzles',
+                        prompt: 'Starting from the green dot, find the path to point E. List the points you pass through in order.\n\nHint: Draw the path on maze to solve the problem. ',
+                        answer: 'Point A,D.',
+                        nano: './static/img/nano-vr/log_5.png',
+                        nano_text: 'Traced path from green dot going upwards, then right, down past C, left, down past A, left, and finally down to E.\n\nAnswer: Points passed (in order): C, A, E',
+                        gpt: './static/img/gpt-vr/log_5.png',
+                        gpt_text: 'Traced path from green dot going down-left, passing near point A, then continuing down-left directly to E without crossing walls or passing B, C, D.\n\nAnswer: Points passed (in order): A, E'
+                    }
+                },
+                'visual-perception': {
+                    'item1': {
+                        chart: './static/img/demo-vr/vis_1.jpg',
+                        reasoning_type: 'Jigsaw',
+                        prompt: 'Choose the option based on your generated full image that correctly completes the jigsaw.',
+                        answer: 'Option B',
+                        nano: './static/img/nano-vr/vis_1.png',
+                        nano_text: 'Generated completed image showing missing top half contains brown book with "УЧЕБНИК" text and black ribbed cylindrical object, matched against four options.\n\nAnswer: Option A',
+                        gpt: './static/img/gpt-vr/vis_1.png',
+                        gpt_text: 'Generated completed image reveals inkwell on wooden base in front of red card with Russian text, compared arrangement and objects with four options.\n\nAnswer: Option A'
+                    },
+                    'item2': {
+                        chart: './static/img/demo-vr/vis_2.jpg',
+                        reasoning_type: 'Jigsaw',
+                        prompt: 'Choose the option based on your generated full image that correctly completes the jigsaw.',
+                        answer: 'Option A',
+                        nano: './static/img/nano-vr/vis_2.png',
+                        nano_text: 'Generated completed image revealing missing top half with harp\'s ornate top section, decorative elements, and upward-extending strings, matched Option A\'s top harp structure details.\n\nAnswer: Option A',
+                        gpt: './static/img/gpt-vr/vis_2.png',
+                        gpt_text: 'Generated completed image showing missing top half with harp neck, woman\'s head and shoulders, and concert hall background, matched Option A\'s instrument shape and colors.\n\nAnswer: Option A'
+                    },
+                    'item3': {
+                        chart: './static/img/demo-vr/vis_3.jpg',
+                        reasoning_type: 'Jigsaw',
+                        prompt: 'Choose the option based on your generated full image that correctly completes the jigsaw.',
+                        answer: 'Option D',
+                        nano: './static/img/nano-vr/vis_3.png',
+                        nano_text: 'Generated completed image showing missing top half with yellow butterfly and green leaf, compared arrangement and butterfly position with four options.\n\nAnswer: Option B',
+                        gpt: './static/img/gpt-vr/vis_3.png',
+                        gpt_text: 'Generated completed image revealing butterfly\'s upper wing and head on vibrant flowers, matched Option D\'s flower continuation on left and butterfly\'s yellow upper wing on right.\n\nAnswer: Option D'
+                    },
+                    'item4': {
+                        chart: './static/img/demo-vr/vis_4.jpg',
+                        reasoning_type: 'Jigsaw',
+                        prompt: 'Choose the option based on your generated full image that correctly completes the jigsaw.',
+                        answer: 'Option B',
+                        nano: './static/img/nano-vr/vis_4.png',
+                        nano_text: 'Generated completed image showing missing bottom half with lower chair backrests, window columns, and wall continuation, matched Option B\'s background pillars and lower furniture structure.\n\nAnswer: Option B',
+                        gpt: './static/img/gpt-vr/vis_4.png',
+                        gpt_text: 'Generated completed image revealing left chair\'s front legs, lower frame, and floor tiles in missing bottom-left section, matched Option A\'s leg and angled seat back perspective.\n\nAnswer: Option A'
+                    },
+                    'item5': {
+                        chart: './static/img/demo-vr/vis_5.jpg',
+                        reasoning_type: 'Jigsaw',
+                        prompt: 'Choose the option based on your generated full image that correctly completes the jigsaw.',
+                        answer: 'Option B',
+                        nano: './static/img/nano-vr/vis_5.png',
+                        nano_text: 'Generated completed image showing missing top half with blurry tennis court background and extended net structure, matched Option B\'s blurry net section fitting top-right continuation.\n\nAnswer: Option B',
+                        gpt: './static/img/gpt-vr/vis_5.png',
+                        gpt_text: 'Generated completed image revealing missing top half with continued diagonal net structure and blurred blue court background without new elements, matched Option B\'s net and court continuation.\n\nAnswer: Option B'
+                    }
+                }
+            };
+    
+            function showCategoryTG(category) {
+                // Hide all thumbnail rows
+                document.querySelectorAll('.thumbnail-row').forEach(container => {
+                    container.style.display = 'none';
+                });
+                
+                // Show selected category
+                document.getElementById(category + '-thumbnails').style.display = 'flex';
+                
+                // Update active button
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                event.target.classList.add('active');
+                
+                currentCategoryTG = category;
+                
+                // Load first item of the category by default
+                showDetailTG(category, 'item1');
+            }
+
+            function showDetailTG(category, item) {
+                // Update content based on selected item
+                const data = sampleDataTG[category] && sampleDataTG[category][item];
+                if (data) {
+                    document.getElementById('data-chart-tg').innerHTML = `
+                        <img src="${data.chart}" alt="Data Chart" style="max-width: 70%; max-height: 250px; object-fit: contain;">
+                        <div class="reasoning-type-label">${data.reasoning_type || 'Physical'}</div>
+                    `;
+                    document.getElementById('prompt-text-tg').textContent = data.prompt;
+                    document.getElementById('answer-text-tg').textContent = data.answer || 'Expected answer will be displayed here.';
+                    document.getElementById('nano-result-tg').innerHTML = `<img src="${data.nano}" alt="Nano Banana Result" style="max-width: 100%; max-height: 80px; object-fit: contain;">`;
+                    document.getElementById('nano-text-tg').textContent = data.nano_text;
+                    document.getElementById('gpt-result-tg').innerHTML = `<img src="${data.gpt}" alt="GPT Result" style="max-width: 100%; max-height: 80px; object-fit: contain;">`;
+                    document.getElementById('gpt-text-tg').textContent = data.gpt_text;
+                }
+            }
+    
+            function backToThumbnailsTG() {
+                document.getElementById('detail-view-tg').style.display = 'none';
+                document.getElementById(currentCategoryTG + '-thumbnails').style.display = 'grid';
+            }
+            showDetailTG('world-model', 'item1');
+    </script>
+        </div>
+
+
+        <div id='rover-benchmark' class="rover-benchmark">
+            
+            <div id="sec:rover-overview" class="sub-section">
+                <h2 class="text"><span class="rover-text">
+                    <span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span>
+                  </span> Benchmark</h2>
+
+                    <p class="text" align="justify">
+                        <p class="text" align="justify">
+                        <strong>Benchmark Overview:</strong>  <span class="rover-text">
+                            <span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span>
+                          </span> introduces the first benchmark specifically designed to evaluate reciprocal cross-modal reasoning in unified multimodal models. Unlike existing benchmarks that evaluate modalities in isolation, <span class="rover-text">
+                            <span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span>
+                          </span> requires models to use information from one modality to inform and improve outputs in another. </p>
+                    <d-figure id="fig-task-demo" >
+                        <figure>
+                            <img data-zoomable="" draggable="false" src="static/img/data.png" alt="benchmark category">
+                            <figcaption style="text-align: center; margin-top: 20px;">
+                                <strong>Figure 2: Verbally-Augmented Reasoning for Visual Generation.</strong>
+                                The benchmark spans 4 domains (natural science, culture and art, common sense, and logic), instantiated across 7 reasoning subtasks.
+                            </figcaption>
+                        </figure>
+                    </d-figure>
+                    <d-figure id="fig-task-demo" >
+                        <figure>
+                            <img data-zoomable="" draggable="false" src="static/img/data_gtr.png" alt="benchmark category">
+                            <figcaption style="text-align: center; margin-top: 20px;">
+                                <strong>Figure 3: Visually-Augmented Reasoning for Verbal Generation.</strong>
+                                The benchmark spans 3 scenarios and 6 subtasks: physical world modeling, logical assistance, and visual perception enhancement.
+                            </figcaption>
+                        </figure>
+                    </d-figure>
+                    
+            </div>
+            <div id="rover-construct" class="sub-section">
+                <p class="text" align="justify">
+                    <strong>Verbally-Augmented Reasoning for Visual Generation:</strong>
+                    This setting evaluates whether models can use structured verbal prompts and reasoning chains to guide faithful image synthesis. It spans 4 domains (natural science, culture and art, common sense, and logic) instantiated across 7 reasoning types: temporal, spatial, causal, synthetic, quantitative, abstract, and mathematical. Each task provides a textual prompt with an initial image and a chain of constraints that a correct output image must satisfy, requiring genuine visual understanding and complex reasoning chains.
+                </p>
+
+                <p class="text" align="justify">
+                    <strong>Visually-Augmented Reasoning for Verbal Generation:</strong>
+                    This setting evaluates whether models can generate intermediate visualizations that strengthen their own reasoning processes. Unlike text-only Chain-of-Thought, we examine scenarios where models generate intermediate visual representations to facilitate reasoning. The benchmark focuses on 3 scenarios: physical world modeling (functioning as world simulators), logical assistance (generating visual aids for abstract problems), and visual perception enhancement (creating supportive images for challenging perception tasks).
+                </p>
+
+            </div>
+        <div id="evaluation-protocol" class="evaluation-protocol">
+            <h2 class="text">Evaluation Protocol</h2>
+            <p class="text" align="justify">
+                <strong>Multi-Dimensional Assessment</strong>:
+                We adopt a multi-dimensional protocol that combines an automated VLM judge - <strong>GPT-4.1</strong> with expert validation on stratified samples.
+            </p>
+        
+            <p class="text" align="justify">
+                <strong>Verbally-Augmented Generation Metrics</strong>:
+                We assess model performance across 5 rubric dimensions: (1) <strong>Reasoning Process (RP)</strong> evaluates the quality of verbal reasoning through logical structure and domain knowledge application; (2) <strong>Reasoning Visual (RV)</strong> measures how well generated visuals match target descriptions; (3) <strong>Reasoning Alignment (Align.)</strong> quantifies consistency between verbal reasoning and visual outcomes; (4) <strong>Visual Consistency (VC)</strong> ensures non-target elements remain unchanged; (5) <strong>Image Quality (IQ)</strong> assesses technical excellence and visual coherence.
+            </p>
+            
+            <p class="text" align="justify">
+                <strong>Visually-Augmented Generation Metrics</strong>:
+                We evaluate across 3 dimensions: (1) <strong>Interleaved Reasoning Quality (IR)</strong> evaluates plausibility and relevance of intermediate visual representations; (2) <strong>Final Answer Accuracy (Acc.)</strong> measures whether the model's final reasoning outcome matches ground truth; (3) <strong>Reasoning-Answer Alignment (Align.)</strong> quantifies how effectively generated images contribute to reaching correct conclusions.
+            </p>
+
+        </div>
+
+         <!-- ROVER Leaderboard Section -->
+         <div id="rover-leaderboard" class="rover-leaderboard">
+            <h2 class="text"><span class="rover-text">
+  <span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span>
+</span> Leaderboard</h2>
+            
+            <div class="leaderboard-container">
+                <div class="leaderboard-header">
+                    <p class="text" align="justify">
+                        <!-- Contact information removed for privacy. The scores in the leaderboard are calculated using weighted formula. -->
+                        The scores in the leaderboard are calculated using the weighted formula: 20% × VC + 20% × IQ + 60% × RV in <strong>ROVER-IG</strong>.
+                    </p>
+                </div>
+
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr class="header-group">
+                            <th rowspan="2" data-column-index="0">Model</th>
+                            <th rowspan="2" data-column-index="1">Params</th>
+                            <th rowspan="2" data-column-index="2">Date</th>
+                            <th rowspan="2" data-column-index="3">Nature Science</th>
+                            <th rowspan="2" data-column-index="4">Culture / Art</th>
+                            <th rowspan="2" data-column-index="5">Common Sense</th>
+                            <th rowspan="2" data-column-index="6">Logic</th>
+                            <th rowspan="2" data-column-index="7">Average</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        <tr>
+                            <td>Nano Banana <span class="model-badge proprietary-badge">Proprietary</span></td>
+                            <td>-</td>
+                            <td>2025-08-22</td>
+                            <td class="best-score">80.9</td>
+                            <td class="best-score">79.5</td>
+                            <td class="best-score">81.1</td>
+                            <td class="best-score">63.3</td>
+                            <td class="best-score">76.2</td>
+                        </tr>
+                        <tr>
+                            <td>Gemini 2.0 Flash <span class="model-badge proprietary-badge">Proprietary</span></td>
+                            <td>-</td>
+                            <td>2025-02-05</td>
+                            <td>72.0</td>
+                            <td>72.9</td>
+                            <td>73.2</td>
+                            <td>55.0</td>
+                            <td>68.3</td>
+                        </tr>
+                        <tr>
+                            <td>GPT-5 <span class="model-badge proprietary-badge">Proprietary</span></td>
+                            <td>-</td>
+                            <td>2025-08-07</td>
+                            <td>74.9</td>
+                            <td>74.5</td>
+                            <td>72.8</td>
+                            <td>59.8</td>
+                            <td>70.5</td>
+                        </tr>
+                        <tr>
+                            <td>BAGEL-Think <span class="model-badge open-badge">Open Source</span></td>
+                            <td>14B</td>
+                            <td>2025-05-23</td>
+                            <td>61.1</td>
+                            <td>65.7</td>
+                            <td>65.0</td>
+                            <td>37.5</td>
+                            <td>57.3</td>
+                        </tr>
+                        <tr>
+                            <td>BAGEL <span class="model-badge open-badge">Open Source</span></td>
+                            <td>14B</td>
+                            <td>2025-05-23</td>
+                            <td>46.2</td>
+                            <td>53.9</td>
+                            <td>51.6</td>
+                            <td>44.1</td>
+                            <td>49.0</td>
+                        </tr>
+                        <tr>
+                            <td>Step1X-Edit v1.2 <span class="model-badge open-badge">Open Source</span></td>
+                            <td>-</td>
+                            <td>2025-09-08</td>
+                            <td>59.2</td>
+                            <td>58.8</td>
+                            <td>57.0</td>
+                            <td>37.7</td>
+                            <td>53.2</td>
+                        </tr>
+                        <tr>
+                            <td>UniCoT <span class="model-badge open-badge">Open Source</span></td>
+                            <td>14B</td>
+                            <td>2025-07-29</td>
+                            <td>49.1</td>
+                            <td>69.4</td>
+                            <td>63.6</td>
+                            <td>28.2</td>
+                            <td>52.6</td>
+                        </tr>
+                        <tr>
+                            <td>BLIP3o-8B <span class="model-badge open-badge">Open Source</span></td>
+                            <td>8B</td>
+                            <td>2025-05-23</td>
+                            <td>50.2</td>
+                            <td>52.0</td>
+                            <td>56.0</td>
+                            <td>43.2</td>
+                            <td>50.3</td>
+                        </tr>
+                        <tr>
+                            <td>MetaQuery-XL <span class="model-badge open-badge">Open Source</span></td>
+                            <td>8.6B</td>
+                            <td>2025-04-28</td>
+                            <td>50.2</td>
+                            <td>48.1</td>
+                            <td>49.3</td>
+                            <td>43.1</td>
+                            <td>47.6</td>
+                        </tr>
+                        <tr>
+                            <td>Janus-Pro-7B <span class="model-badge open-badge">Open Source</span></td>
+                            <td>7B</td>
+                            <td>2025-01-27</td>
+                            <td>45.2</td>
+                            <td>45.6</td>
+                            <td>47.8</td>
+                            <td>40.7</td>
+                            <td>44.8</td>
+                        </tr>
+                        <tr>
+                            <td>Emu3-Gen <span class="model-badge open-badge">Open Source</span></td>
+                            <td>8B</td>
+                            <td>2025-02-13</td>
+                            <td>52.2</td>
+                            <td>47.5</td>
+                            <td>49.5</td>
+                            <td>43.7</td>
+                            <td>48.2</td>
+                        </tr>
+                        <tr>
+                            <td>OmniGen2 <span class="model-badge open-badge">Open Source</span></td>
+                            <td>27B</td>
+                            <td>2025-06-16</td>
+                            <td>48.2</td>
+                            <td>49.5</td>
+                            <td>51.3</td>
+                            <td>42.6</td>
+                            <td>47.9</td>
+                        </tr>
+                        <tr>
+                            <td>Show-o2 <span class="model-badge open-badge">Open Source</span></td>
+                            <td>27B</td>
+                            <td>2025-06-18</td>
+                            <td>42.5</td>
+                            <td>48.7</td>
+                            <td>46.6</td>
+                            <td>40.1</td>
+                            <td>44.4</td>
+                        </tr>
+                        <tr>
+                            <td>Qwen-Image-Edit <span class="model-badge edit-badge">Edit</span></td>
+                            <td>20B</td>
+                            <td>2025-08-04</td>
+                            <td>59.8</td>
+                            <td>70.5</td>
+                            <td>65.6</td>
+                            <td>48.6</td>
+                            <td>61.1</td>
+                        </tr>
+                        <tr>
+                            <td>FLUX.1 Kontext <span class="model-badge edit-badge">Edit</span></td>
+                            <td>12B</td>
+                            <td>2025-08-06</td>
+                            <td>51.5</td>
+                            <td>57.6</td>
+                            <td>54.8</td>
+                            <td>37.9</td>
+                            <td>50.5</td>
+                        </tr>
+                        <tr>
+                            <td>UltraEdit(SD3) <span class="model-badge edit-badge">Edit</span></td>
+                            <td>2B</td>
+                            <td>2024-08-31</td>
+                            <td>40.1</td>
+                            <td>51.4</td>
+                            <td>39.1</td>
+                            <td>42.4</td>
+                            <td>43.3</td>
+                        </tr>
+                        <tr>
+                            <td>VAREdit-8B <span class="model-badge edit-badge">Edit</span></td>
+                            <td>8B</td>
+                            <td>2025-08-21</td>
+                            <td>48.7</td>
+                            <td>55.2</td>
+                            <td>47.0</td>
+                            <td>31.2</td>
+                            <td>45.5</td>
+                        </tr>
+                        <tr>
+                            <td>Step1X-Edit v1.1 <span class="model-badge edit-badge">Edit</span></td>
+                            <td>-</td>
+                            <td>2025-06-09</td>
+                            <td>55.2</td>
+                            <td>59.6</td>
+                            <td>51.8</td>
+                            <td>39.1</td>
+                            <td>51.4</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id='findings-and-insights' class="findings-and-insights">
+            <h2 class="text">Findings and Insights</h2>
+                <p class="text" align="justify">
+                We conducted comprehensive evaluation of 17 state-of-the-art unified multimodal models across both settings in <span class="rover-text">
+  <span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span>
+</span>. Our experiments reveal critical insights about the current state and limitations of cross-modal reasoning capabilities in modern UMMs.
+                </p>
+            <div class="keyfinding-wrap">
+              <div class="keyfinding-card">
+                <h4 class="keyfinding-title">Key Finding 1</h4>
+                <p class="keyfinding-text">Cross-modal reasoning capabilities and alignment strongly correlate with visual generation effectiveness.</p>
+              </div>
+            </div>
+
+            <div class="keyfinding-wrap">
+              <div class="keyfinding-card">
+                <h4 class="keyfinding-title">Key Finding 2</h4>
+                <p class="keyfinding-text">Unified models capable of interleaved image-text generation demonstrate superior reasoning-dependent visual generation performance.</p>
+              </div>
+            </div>
+
+            <div class="keyfinding-wrap">
+              <div class="keyfinding-card">
+                <h4 class="keyfinding-title">Key Finding 3</h4>
+                <p class="keyfinding-text">Current models remain severely limited in visually-augmented reasoning, showing relative strength in perception and physical modeling but weakness in logical tasks.</p>
+              </div>
+            </div>
+            <br>
+                <p class="text" align="justify">
+                <strong>Cross-Modal Reasoning Matters for UMMs</strong>:
+                To validate that UMMs perform cross-modal reasoning internally and that this mechanism cannot be replicated through external models, we conducted comparative analysis between unified models and cascade approaches. Results demonstrate that reasoning across modalities cannot fully transfer across different model architectures—unified models must transcend modality boundaries to produce emergent cross-modal insights.
+                </p>
+
+            <d-figure id="fig-cascade-analysis">
+                    <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/cascade.png" alt="Cascade Analysis" loading="lazy">
+                        <figcaption style="text-align: center; margin-top: 20px;">
+                        <strong>Figure 6</strong>: Cascade reasoning evaluation comparing cascade approaches (FLUX+GPT with GPT-4o prompt refinement) against unified multimodal models.
+                        </figcaption>
+                    </figure>
+                </d-figure>
+
+                <p class="text" align="justify">
+                <strong>Coherence Between Reasoning Subtasks</strong>:
+                Analysis reveals uneven performance across reasoning dimensions, with models excelling in temporal, spatial, and causal reasoning while struggling with abstract and mathematical tasks. This pattern indicates that current UMMs better handle concrete, observable phenomena than symbolic reasoning. Strong interdependence among physical reasoning types suggests shared mechanisms for processing spatiotemporal relationships, while abstract reasoning develops as a distinct capability.
+            </p>
+            
+            <d-figure id="fig-reasoning-analysis">
+                    <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/reasoning.png" alt="Reasoning Analysis" loading="lazy">
+                        <figcaption style="text-align: center; margin-top: 20px;">
+                        <strong>Figure 7</strong>: Analysis of reasoning capabilities showing performance patterns across different reasoning subtasks and their correlations.
+                        </figcaption>
+                    </figure>
+                </d-figure>
+
+                    <p class="text" align="justify">
+                <strong>Evaluation Protocol Reliability</strong>:
+                We conducted user studies with 4 human experts to validate our VLM-as-judge evaluation protocol. Results demonstrate strong alignment between GPT-4.1 and human expert judgments across all evaluation dimensions. Visual-quality-related metrics show particularly strong human-VLM agreement, while reasoning-related metrics exhibit larger but acceptable discrepancies due to inherent complexities in multimodal reasoning assessment.
+                    </p>
+
+            <d-figure id="fig-evaluation-reliability">
+                        <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/vlm_evaluation_metrics.png" alt="Evaluation Reliability" loading="lazy">
+                            <figcaption style="text-align: center; margin-top: 20px;">
+                        <strong>Figure 8</strong>: Evaluation reliability of GPT-4.1 across five assessment dimensions, showing Pearson correlation coefficients and Mean Absolute Error compared to human experts.
+                            </figcaption>
+                        </figure>
+                    </d-figure>
+                    </div>
+
+        <div id="conclusion" style="position: relative; margin-top: 40px; margin-bottom: 0px;">
+            <h2 class="text" style="margin-top:0px; margin-bottom:10px">Conclusion</h2>
+            <p class="text" align="justify">
+                We introduce <span class="rover-text">
+  <span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span>
+</span>, the first benchmark for reciprocal cross-modal reasoning, which systematically evaluates 17 unified multimodal models across 23 diverse task types in both verbal reasoning for visual generation and interleaved multimodal reasoning scenarios. Our evaluation exposes substantial performance gaps in current models and establishes that interleaved generation capabilities are strongly correlated with cross-modal reasoning effectiveness. These findings expose critical limitations in existing unified models and provide insights for advancing cross-modal reasoning capabilities in future omnimodal models. <span class="rover-text">
+  <span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span>
+</span> represents a critical step toward enabling true omnimodal generation through reciprocal cross-modal reasoning.
+            </p>
+        </div>
+
+        <!-- BibTeX section removed for privacy -->
+
+    </div>
+
+        <!-- </d-article>
+        
+        <d-appendix>
+
+            
+        </d-appendix>  
+        <d-bibliography src="bibliography.bib"></d-bibliography>
+        <script src="/static/js/nav-bar.js"></script> -->
+
+<!-- Leaderboard Sorting JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const table = document.querySelector('.leaderboard-table');
+    if (!table) return; // Exit if table doesn't exist
+    
+    const thead = table.querySelector('thead');
+    const tbody = document.getElementById('leaderboard-body');
+    
+    // Default sort configuration: by 'Avg.' column (index 7), descending.
+    let sortConfig = {
+        columnIndex: 7, 
+        direction: 'desc'
+    };
+
+    const headers = thead.querySelectorAll('th[data-column-index]');
+
+    // Updates the visual indicators (▲/▼) on the table headers.
+    function updateSortIndicators() {
+        headers.forEach(h => {
+            const indicator = h.querySelector('.sort-indicator');
+            if (indicator) {
+                const hIndex = parseInt(h.dataset.columnIndex);
+                if (hIndex === sortConfig.columnIndex) {
+                    indicator.textContent = sortConfig.direction === 'asc' ? '▲' : '▼';
+                    h.classList.add('active');
+                } else {
+                    indicator.textContent = '';
+                    h.classList.remove('active');
+                }
+            }
+        });
+    }
+    
+    // Parses the 'LLM Params' column, converting values like '7B' or '500M' to numbers.
+    function parseParams(param) {
+        if (param === '-') return -1;
+        const value = parseFloat(param);
+        if (isNaN(value)) return -1;
+        if (param.toLowerCase().includes('b')) return value * 1e9;
+        if (param.toLowerCase().includes('m')) return value * 1e6;
+        return value;
+    }
+
+    // Generic comparison function for sorting. Handles strings, dates, params, and numbers.
+    function compareValues(valA, valB, index) {
+        // Column 0: Model name (string comparison)
+        if (index === 0) { 
+            return valA.localeCompare(valB);
+        }
+        // Column 1: LLM Params (special parsing)
+        if (index === 1) { 
+            return parseParams(valA) - parseParams(valB);
+        }
+        // Column 3: Date (date comparison)
+        if (index === 3) { 
+            return new Date(valA) - new Date(valB);
+        }
+
+        // Default: Numeric comparison for all other columns
+        const numA = parseFloat(valA);
+        const numB = parseFloat(valB);
+
+        const isNumA = !isNaN(numA);
+        const isNumB = !isNaN(numB);
+
+        if (isNumA && isNumB) return numA - numB;
+        if (isNumA) return 1; // Put non-numeric values ('-') at the bottom
+        if (isNumB) return -1;
+        return 0;
+    }
+
+    // Main function to sort the table body.
+    function sortTable() {
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        
+        // Filter out rows that should not be sorted (e.g., section headers, baselines).
+        const sortableRows = rows.filter(row => 
+            !row.classList.contains('baseline-row') &&
+            !row.classList.contains('human-level-row') &&
+            !row.classList.contains('section-divider') &&
+            !row.classList.contains('section-header')
+        );
+        
+        const direction = sortConfig.direction === 'asc' ? 1 : -1;
+
+        // Sort the filtered rows based on the selected column and direction.
+        sortableRows.sort((rowA, rowB) => {
+            const cellA = rowA.children[sortConfig.columnIndex].textContent.trim();
+            const cellB = rowB.children[sortConfig.columnIndex].textContent.trim();
+            return compareValues(cellA, cellB, sortConfig.columnIndex) * direction;
+        });
+
+        // Append the sorted rows back to the table body.
+        // This moves them to the end, after the non-sortable rows which were not removed.
+        sortableRows.forEach(row => tbody.appendChild(row));
+        updateSortIndicators();
+    }
+
+    // Add click listeners to all sortable headers.
+    headers.forEach(header => {
+        header.classList.add('sortable-header');
+        const indicator = document.createElement('span');
+        indicator.className = 'sort-indicator';
+        header.appendChild(indicator);
+
+        header.addEventListener('click', () => {
+            const columnIndex = parseInt(header.dataset.columnIndex);
+            // If clicking the same column, reverse direction.
+            if (sortConfig.columnIndex === columnIndex) {
+                sortConfig.direction = sortConfig.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                // Otherwise, switch to the new column and default to descending.
+                sortConfig.columnIndex = columnIndex;
+                sortConfig.direction = 'desc';
+            }
+            sortTable();
+        });
+    });
+
+    // Perform the initial sort when the page loads.
+    sortTable();
+});
+</script>
+
+    </body>
+</html>
