@@ -324,6 +324,19 @@
                 pointer-events: none;
             }
         }
+        .org-logo {
+            height: 24px;  /* 控制logo高度 */
+            width: auto;   /* 宽度自适应 */
+            display: block;
+            margin: 0 auto;  /* 水平居中 */
+        }
+
+        /* 如果需要hover效果 */
+        .org-logo:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+            transition: all 0.2s ease;
+        }
         </style>
     </head>
 
@@ -1851,18 +1864,20 @@
                     <thead>
                         <tr class="header-group">
                             <th rowspan="2" data-column-index="0">Model</th>
-                            <th rowspan="2" data-column-index="1">Params</th>
-                            <th rowspan="2" data-column-index="2">Date</th>
-                            <th rowspan="2" data-column-index="3">Nature Science</th>
-                            <th rowspan="2" data-column-index="4">Culture / Art</th>
-                            <th rowspan="2" data-column-index="5">Common Sense</th>
-                            <th rowspan="2" data-column-index="6">Logic</th>
-                            <th rowspan="2" data-column-index="7">Average</th>
+                            <th rowspan="2" data-column-index="1">Organizor</th>
+                            <th rowspan="2" data-column-index="2">Params</th>
+                            <th rowspan="2" data-column-index="3">Date</th>
+                            <th rowspan="2" data-column-index="4">Nature Science</th>
+                            <th rowspan="2" data-column-index="5">Culture / Art</th>
+                            <th rowspan="2" data-column-index="6">Common Sense</th>
+                            <th rowspan="2" data-column-index="7">Logic</th>
+                            <th rowspan="2" data-column-index="8">Average</th>
                         </tr>
                     </thead>
                     <tbody id="leaderboard-body">
                         <tr>
                             <td>Nano Banana <span class="model-badge proprietary-badge">Proprietary</span></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2sSeQqjaUTuZ3gRgkKjidpaipF_l6s72lBw&s" alt="Google" class="org-logo"></td>
                             <td>-</td>
                             <td>2025-08-22</td>
                             <td class="best-score">80.9</td>
@@ -1873,6 +1888,7 @@
                         </tr>
                         <tr>
                             <td>Gemini 2.0 Flash <span class="model-badge proprietary-badge">Proprietary</span></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2sSeQqjaUTuZ3gRgkKjidpaipF_l6s72lBw&s" alt="Google" class="org-logo"></td>
                             <td>-</td>
                             <td>2025-02-05</td>
                             <td>72.0</td>
@@ -1883,6 +1899,7 @@
                         </tr>
                         <tr>
                             <td>GPT-5 <span class="model-badge proprietary-badge">Proprietary</span></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxWDMBbvfm-mFBdcmaFchGGSy8ciuUcapxhQ&s" alt="OpenAI" class="org-logo"></td>
                             <td>-</td>
                             <td>2025-08-07</td>
                             <td>74.9</td>
@@ -1893,6 +1910,7 @@
                         </tr>
                         <tr>
                             <td>BAGEL-Think <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs6qoNHcWK4n-kjbrVhFX322hGtcEGc3CZyg&s" alt="ByteDance Seed" class="org-logo"></td>
                             <td>14B</td>
                             <td>2025-05-23</td>
                             <td>61.1</td>
@@ -1903,6 +1921,7 @@
                         </tr>
                         <tr>
                             <td>BAGEL <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs6qoNHcWK4n-kjbrVhFX322hGtcEGc3CZyg&s" alt="ByteDance Seed" class="org-logo"></td>
                             <td>14B</td>
                             <td>2025-05-23</td>
                             <td>46.2</td>
@@ -1913,6 +1932,7 @@
                         </tr>
                         <tr>
                             <td>Step1X-Edit v1.2 <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://avatars.githubusercontent.com/u/178004800?s=280&v=4" alt="StepFun" class="org-logo"></td>
                             <td>-</td>
                             <td>2025-09-08</td>
                             <td>59.2</td>
@@ -1923,6 +1943,7 @@
                         </tr>
                         <tr>
                             <td>UniCoT <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp27xpoGxMSx00xOzinbOVUv4jhlDK_2mLWQ&s" alt="Fudan" class="org-logo"></td>
                             <td>14B</td>
                             <td>2025-07-29</td>
                             <td>49.1</td>
@@ -1933,6 +1954,7 @@
                         </tr>
                         <tr>
                             <td>BLIP3o-8B <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Salesforce.com_logo.svg/2560px-Salesforce.com_logo.svg.png" alt="Salesforce" class="org-logo"></td>
                             <td>8B</td>
                             <td>2025-05-23</td>
                             <td>50.2</td>
@@ -1943,6 +1965,7 @@
                         </tr>
                         <tr>
                             <td>MetaQuery-XL <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/meta-color.png" alt="Meta" class="org-logo"></td>
                             <td>8.6B</td>
                             <td>2025-04-28</td>
                             <td>50.2</td>
@@ -1953,6 +1976,7 @@
                         </tr>
                         <tr>
                             <td>Janus-Pro-7B <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png" alt="DeepSeek" class="org-logo"></td>
                             <td>7B</td>
                             <td>2025-01-27</td>
                             <td>45.2</td>
@@ -1963,6 +1987,7 @@
                         </tr>
                         <tr>
                             <td>Emu3-Gen <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/meta-color.png" alt="Meta" class="org-logo"></td>
                             <td>8B</td>
                             <td>2025-02-13</td>
                             <td>52.2</td>
@@ -1973,6 +1998,7 @@
                         </tr>
                         <tr>
                             <td>OmniGen2 <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6zMR9FgVa8FsVeJH9EU36oR0Ln7cfJI9mKzP-2tlOVoh04S0pLpmBTY0l_9zkIdM4GPs&usqp=CAU" alt="BAAI" class="org-logo"></td>
                             <td>27B</td>
                             <td>2025-06-16</td>
                             <td>48.2</td>
@@ -1983,6 +2009,7 @@
                         </tr>
                         <tr>
                             <td>Show-o2 <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://cdn-avatars.huggingface.co/v1/production/uploads/1671779505215-63a55320ce5763e06f78519c.png" alt="ShowLab" class="org-logo"></td>
                             <td>27B</td>
                             <td>2025-06-18</td>
                             <td>42.5</td>
@@ -1993,6 +2020,7 @@
                         </tr>
                         <tr>
                             <td>Qwen-Image-Edit <span class="model-badge edit-badge">Edit</span></td>
+                            <td><img src="https://avatars.githubusercontent.com/u/141221163?s=200&v=4" alt="Qwen" class="org-logo"></td>
                             <td>20B</td>
                             <td>2025-08-04</td>
                             <td>59.8</td>
@@ -2003,6 +2031,7 @@
                         </tr>
                         <tr>
                             <td>FLUX.1 Kontext <span class="model-badge edit-badge">Edit</span></td>
+                            <td><img src="https://avatars.githubusercontent.com/u/164064024?s=200&v=4" alt="Black Forest Labs" class="org-logo"></td>
                             <td>12B</td>
                             <td>2025-08-06</td>
                             <td>51.5</td>
@@ -2013,6 +2042,7 @@
                         </tr>
                         <tr>
                             <td>UltraEdit(SD3) <span class="model-badge edit-badge">Edit</span></td>
+                            <td><img src="https://avatars.githubusercontent.com/u/135824553?s=200&v=4" alt="PKU" class="org-logo"></td>
                             <td>2B</td>
                             <td>2024-08-31</td>
                             <td>40.1</td>
@@ -2023,6 +2053,7 @@
                         </tr>
                         <tr>
                             <td>VAREdit-8B <span class="model-badge edit-badge">Edit</span></td>
+                            <td><img src="https://avatars.githubusercontent.com/u/199627684?s=200&v=4" alt="HiDream-ai" class="org-logo"></td>
                             <td>8B</td>
                             <td>2025-08-21</td>
                             <td>48.7</td>
@@ -2033,6 +2064,7 @@
                         </tr>
                         <tr>
                             <td>Step1X-Edit v1.1 <span class="model-badge edit-badge">Edit</span></td>
+                            <td><img src="https://avatars.githubusercontent.com/u/178004800?s=280&v=4" alt="StepFun" class="org-logo"></td>
                             <td>-</td>
                             <td>2025-06-09</td>
                             <td>55.2</td>
@@ -2150,9 +2182,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const thead = table.querySelector('thead');
     const tbody = document.getElementById('leaderboard-body');
     
-    // Default sort configuration: by 'Avg.' column (index 7), descending.
+    // Default sort configuration: by 'Avg.' column (index 8), descending.
     let sortConfig = {
-        columnIndex: 7, 
+        columnIndex: 8, 
         direction: 'desc'
     };
 
@@ -2191,8 +2223,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (index === 0) { 
             return valA.localeCompare(valB);
         }
-        // Column 1: LLM Params (special parsing)
+        // Column 1: Organizor (string comparison)
         if (index === 1) { 
+            return valA.localeCompare(valB);
+        }
+        // Column 2: LLM Params (special parsing)
+        if (index === 2) { 
             return parseParams(valA) - parseParams(valB);
         }
         // Column 3: Date (date comparison)
