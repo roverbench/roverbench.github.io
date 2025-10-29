@@ -100,6 +100,18 @@
                 margin-right: auto;
             }
         }
+                /* Author link styling */
+        .author-block a {
+            color: #1e6278;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .author-block a:hover {
+            color: var(--mgt-red);
+            border-bottom-color: var(--mgt-red);
+        }
 
         /* Key Findings unified card styles */
         .keyfinding-wrap {
@@ -350,6 +362,81 @@
                     <div class="responsive-header">
                         <h2>Benchmarking Reciprocal Cross-Modal Reasoning for Omnimodal Generation</h2>
                     </div>
+
+                                    <div>
+                    <!-- Paper authors -->
+                    <span class="author-block">
+                        <a href="https://cheryyunl.github.io/" target="_blank">
+                            Yongyuan Liang</a><sup style="font-size: 0.8em;">△*</sup>,</span>
+                    <span class="author-block">
+                        <a href="" target="_blank">
+                            Wei Chow</a><sup style="font-size: 0.8em;">▲*</sup>,</span>
+                    <span class="author-block">
+                        <a href="" target="_blank">Feng Li</a><sup style="font-size: 0.8em;">♦</sup>,</span>
+                    <span class="author-block">
+                        <a href="" target="_blank">Ziqiao Ma</a><sup style="font-size: 0.8em;">♣</sup>,
+                    </span>
+                    <span class="author-block">
+                        <a href="" target="_blank">Xiyao Wang</a><sup style="font-size: 0.8em;">△</sup>,
+                    </span>
+                    <span class="author-block">
+                        <a href="" target="_blank">Jiageng Mao</a><sup style="font-size: 0.8em;">★</sup>,
+                    </span>
+                    <br>
+                    <span class="author-block">
+                        <a href="" target="_blank">Jiuhai Chen</a><sup style="font-size: 0.8em;">△</sup>,
+                    </span>
+                    <span class="author-block">
+                        <a href="" target="_blank">Jiatao Gu</a><sup style="font-size: 0.8em;">▲</sup>,
+                    </span>
+                    <span class="author-block">
+                        <a href="" target="_blank">Yue Wang</a><sup style="font-size: 0.8em;">★</sup>,
+                    </span>
+                    <span class="author-block">
+                        <a href="" target="_blank">Furong Huang</a><sup style="font-size: 0.8em;">△</sup>,
+                    </span>
+                </div>
+
+                <div>
+                    <span class="author-block"><sup style="font-size: 0.8em;">△</sup>University of Maryland, College Park,</span>
+                    <span class="author-block"><sup style="font-size: 0.8em;">▲</sup>University of Pennsylvania,</span>
+                    <span class="author-block"><sup style="font-size: 0.8em;">★</sup>University of Southern California,</span>
+                    <br>
+                    <span class="author-block"><sup style="font-size: 0.8em;">♣</sup>University of Michigan</span>
+                    <span class="author-block"><sup style="font-size: 0.8em;">♦</sup>The Hong Kong University of Science and
+                        Technology</span>
+                    <span class="eql-cntrb"><br><sup style="font-size: 0.8em;">*</sup>Equal contribution.</span>
+                </div>
+
+                <div class="button-container">
+                    <a href="https://arxiv.org/abs/2412.14171" class="button paper-link" target="_blank">
+                        <span class="icon is-small"><i class="ai ai-arxiv"></i></span>
+                        arXiv (soon)
+                    </a>
+                    <a href="https://github.com/vision-x-nyu/thinking-in-space" class="button" target="_blank">
+                        <span class="icon is-small"><i class="fab fa-github"></i></span>
+                        <span>Code (soon)</span>
+                    </a>                      
+                    <a href="https://huggingface.co/datasets/nyu-visionx/VSI-Bench" class="button" target="_blank">
+                        <span class="icon is-small">
+                            <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" style="height: 1em;" loading="lazy">
+                        </span>
+                        <span>ROVER (soon)</span>
+                    </a>
+                    <a href="#rover-demo" class="button">
+                        <span class="icon is-small">
+                            <img src="./static/img/data_icon.png" alt="Viewer logo" style="height: 1em;" loading="lazy">
+                        </span>
+                        <span>Data Viewer</span>
+                    </a>
+                    <a href="#rover-leaderboard" class="button">
+                        <span class="icon is-small">
+                            <img src="./static/img/leaderboard-star-svgrepo-com.svg" alt="Leaderboard logo" style="height: 1em;" loading="lazy">
+                        </span>
+                        <span>Leaderboard</span>
+                    </a>
+                </div>   
+
                       
 
                         <div class="icon-container">
@@ -379,6 +466,7 @@
             </div>
         </div>
     <d-article>
+        
 
         <d-figure id="fig-teaser">
             <figure>
@@ -1953,10 +2041,10 @@
                             <td>52.6</td>
                         </tr>
                         <tr>
-                            <td>BLIP3o-8B <span class="model-badge open-badge">Open Source</span></td>
+                            <td>BLIP3o-NEXT <span class="model-badge open-badge">Open Source</span></td>
                             <td><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Salesforce.com_logo.svg/2560px-Salesforce.com_logo.svg.png" alt="Salesforce" class="org-logo"></td>
                             <td>8B</td>
-                            <td>2025-05-23</td>
+                            <td>2025-08-04</td>
                             <td>50.2</td>
                             <td>52.0</td>
                             <td>56.0</td>
@@ -1964,9 +2052,9 @@
                             <td>50.3</td>
                         </tr>
                         <tr>
-                            <td>MetaQuery-XL <span class="model-badge open-badge">Open Source</span></td>
-                            <td><img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/meta-color.png" alt="Meta" class="org-logo"></td>
-                            <td>8.6B</td>
+                            <td>UniPic2-Metaquery-9B  <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/skywork-color.png" alt="Skywork" class="org-logo"></td>
+                            <td>9B</td>
                             <td>2025-04-28</td>
                             <td>50.2</td>
                             <td>48.1</td>
@@ -1975,19 +2063,8 @@
                             <td>47.6</td>
                         </tr>
                         <tr>
-                            <td>Janus-Pro-7B <span class="model-badge open-badge">Open Source</span></td>
-                            <td><img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek-color.png" alt="DeepSeek" class="org-logo"></td>
-                            <td>7B</td>
-                            <td>2025-01-27</td>
-                            <td>45.2</td>
-                            <td>45.6</td>
-                            <td>47.8</td>
-                            <td>40.7</td>
-                            <td>44.8</td>
-                        </tr>
-                        <tr>
-                            <td>Emu3-Gen <span class="model-badge open-badge">Open Source</span></td>
-                            <td><img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/meta-color.png" alt="Meta" class="org-logo"></td>
+                            <td>Emu2-Gen <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6zMR9FgVa8FsVeJH9EU36oR0Ln7cfJI9mKzP-2tlOVoh04S0pLpmBTY0l_9zkIdM4GPs&usqp=CAU" alt="BAAI" class="org-logo"></td>
                             <td>8B</td>
                             <td>2025-02-13</td>
                             <td>52.2</td>
@@ -2006,17 +2083,6 @@
                             <td>51.3</td>
                             <td>42.6</td>
                             <td>47.9</td>
-                        </tr>
-                        <tr>
-                            <td>Show-o2 <span class="model-badge open-badge">Open Source</span></td>
-                            <td><img src="https://cdn-avatars.huggingface.co/v1/production/uploads/1671779505215-63a55320ce5763e06f78519c.png" alt="ShowLab" class="org-logo"></td>
-                            <td>27B</td>
-                            <td>2025-06-18</td>
-                            <td>42.5</td>
-                            <td>48.7</td>
-                            <td>46.6</td>
-                            <td>40.1</td>
-                            <td>44.4</td>
                         </tr>
                         <tr>
                             <td>Qwen-Image-Edit <span class="model-badge edit-badge">Edit</span></td>

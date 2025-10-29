@@ -399,34 +399,34 @@ body {
   }
 }
 .author-link, .affiliation-link {
-    font-size: 1.1em;
-    color: rgb(61, 99, 141); /* Set the color to match the other text */
-    text-decoration: none; /* Removes the underline */
-    border-bottom: none;
-    cursor: pointer; /* Changes cursor to pointer to indicate link */
-    white-space: nowrap;  /* Prevent breaking names across lines */
-    /* Increase vertical spacing */
-    line-height: 2.3rem; /* Increase line height for better readability */
+  font-size: 1.1em;
+  color: rgb(61, 99, 141); /* Set the color to match the other text */
+  text-decoration: none; /* Removes the underline */
+  border-bottom: none;
+  cursor: pointer; /* Changes cursor to pointer to indicate link */
+  white-space: nowrap;  /* Prevent breaking names across lines */
+  /* Increase vertical spacing */
+  line-height: 2.3rem; /* Increase line height for better readability */
 
 }
 
 .author-note {
-    font-size: 0.9rem;
-    color: #999; /* Light grey color for the text */
-    margin-top: 0.25em; /* Space above the note */
-    margin-bottom: 0.25em; /* Space below the note */
+  font-size: 0.9rem;
+  color: #999; /* Light grey color for the text */
+  margin-top: 0.25em; /* Space above the note */
+  margin-bottom: 0.25em; /* Space below the note */
 }
 
 #affiliation {
-    font-size: 1.6em;
-    /* bold */
-    font-weight: bolder;
+  font-size: 1.6em;
+  /* bold */
+  font-weight: bolder;
 }
 
 .author-link:hover, .affiliation-link:hover {
-  text-decoration: underline; /* Adds underline on hover for visual feedback */
-  border-bottom: none;
-  color: #667eea; /* Same color as Key Insights */
+text-decoration: underline; /* Adds underline on hover for visual feedback */
+border-bottom: none;
+color: #667eea; /* Same color as Key Insights */
 }
 
 
