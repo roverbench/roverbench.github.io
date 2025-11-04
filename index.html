@@ -356,14 +356,17 @@
         <div class="header-wrapper">
             <div class="header-container" id="header-container">
                 <div class="header-content">
-                    <h1 style="margin-top: 0px">
-                        <i><span class="rover-logo"><span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span></span></i>
-                    </h1>
+                    <div class="rover-title-wrapper">
+                        <h1 style="margin-top: 0px">
+                            <i><span class="rover-logo"><span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span></span></i>
+                        </h1>
+                        <img src="./static/img/head.png" alt="ROVER illustration" class="rover-title-image">
+                    </div>
                     <div class="responsive-header">
                         <h2>Benchmarking Reciprocal Cross-Modal Reasoning for Omnimodal Generation</h2>
                     </div>
 
-                                    <div>
+                                    <div class="authors-section">
                     <!-- Paper authors -->
                     <span class="author-block">
                         <a href="https://cheryyunl.github.io/" target="_blank">
@@ -397,7 +400,7 @@
                     </span>
                 </div>
 
-                <div>
+                <div class="affiliations-section">
                     <span class="author-block"><sup style="font-size: 0.8em;">△</sup>University of Maryland, College Park,</span>
                     <span class="author-block"><sup style="font-size: 0.8em;">▲</sup>University of Pennsylvania,</span>
                     <span class="author-block"><sup style="font-size: 0.8em;">★</sup>University of Southern California,</span>
@@ -409,9 +412,9 @@
                 </div>
 
                 <div class="button-container">
-                    <a href=" " class="button paper-link" target="_blank">
+                    <a href="https://arxiv.org/abs/2511.01163" class="button paper-link" target="_blank">
                         <span class="icon is-small"><i class="ai ai-arxiv"></i></span>
-                        arXiv (soon)
+                        arXiv
                     </a>
                     <a href="https://github.com/cheryyunl/ROVER" class="button" target="_blank">
                         <span class="icon is-small"><i class="fab fa-github"></i></span>
@@ -443,19 +446,19 @@
                             <div class="icon-item">
                                 
                                 <img src="./static/img/icons/bench.svg" alt="Benchmark Icon">
-                                <div><strong>Reciprocal Reasoning</strong>: We introduce the first benchmark targeting reciprocal cross-modal reasoning where one modality guides, verifies, or refines outputs in another.</div>
+                                <div><strong>Reciprocal Reasoning</strong>: First benchmark evaluating how onemodality guides, verifies, or refines outputs in another.</div>
                             </div>
                             <div class="icon-item">
                                 <img src="./static/img/icons/evaluation.svg" alt="Evaluation Icon">
-                                <div><strong>Dual Settings</strong>: <span class="rover-text"><span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span></span> evaluates verbally-augmented visual generation and visually-augmented verbal reasoning across diverse domains and reasoning types.</div>
+                                <div><strong>Dual Settings</strong>: <span class="rover-text"><span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span></span> evaluates verbally-augmented visual generation and visually-augmented verbal reasoning.</div>
                             </div>
                             <div class="icon-item">
                                 <img src="./static/img/icons/speech.svg" alt="Generation Icon" class="icon">
-                                <div><strong>Comprehensive Evaluation</strong>: Multi-dimensional evaluation protocol assessing reasoning process, output alignment, and cross-modal consistency.</div>
+                                <div><strong>Comprehensive Evaluation</strong>: Multi-dimensional evaluation protocol assessing reasoning process, alignment, and consistency.</div>
                             </div>
                             <div class="icon-item">
                                 <img src="./static/img/icons/vision.svg" alt="Analysis Icon" class="icon">
-                                <div><strong>Key Insights</strong>: Cross-modal reasoning strongly correlates with visual generation performance, while current models show limited visually-augmented reasoning capabilities.</div>
+                                <div><strong>Key Insights</strong>: Cross-modal reasoning correlates with visual generation; current models show limited visual reasoning.</div>
                             </div>
                         </div>
                     
@@ -479,7 +482,7 @@
         </d-figure>
         <!-- Abstract -->
         <p class="text abstract">
-            Unified multimodal models (UMMs) have shown remarkable advances in understanding and generating text and images. However, prevailing evaluations treat these abilities in isolation, such that tasks with multimodal inputs and outputs are scored primarily through unimodal reasoning. Existing benchmarks rarely require the use of one modality to guide, verify, or refine outputs in the other, failing to capture a central aspiration of unified multimodal models: seamless reasoning across modalities.             We address this gap with <span class="rover-text"><span class="r1">R</span><span class="o">O</span><span class="v">V</span><span class="e">E</span><span class="r2">R</span></span>, a human-annotated benchmark that explicitly targets reciprocal cross-modal reasoning, containing 1285 tasks grounded in 2,048 images spanning two complementary settings. <strong>Verbally-augmented reasoning for visual generation</strong> evaluates whether models can use structured verbal prompts and reasoning chains to guide faithful image synthesis. <strong>Visually-augmented reasoning for verbal generation</strong> evaluates whether models can generate intermediate visualizations that strengthen their own reasoning processes. 
+            Unified multimodal models (UMMs) have emerged as a powerful paradigm for seamlessly unifying text and image understanding and generation. However, prevailing evaluations treat these abilities in isolation, such that tasks with multimodal inputs and outputs are scored primarily through unimodal reasoning, i.e., textual benchmarks emphasize language-based reasoning, while visual benchmarks emphasize reasoning outcomes manifested in the pixels. We introduce ROVER to address this pressing need to test reciprocal cross-modal reasoning, the use of one modality to guide, verify, or refine outputs in the other, an ability central to the vision of unified multimodal intelligence. ROVER is a human-annotated benchmark that explicitly targets reciprocal cross-modal reasoning, which contains 1312 tasks grounded in 1876 images, spanning two complementary settings. Verbally-augmented reasoning for visual generation evaluates whether models can use verbal prompts and reasoning chains to guide faithful image synthesis. Visually-augmented reasoning for verbal generation evaluates whether models can generate intermediate visualizations that strengthen their own reasoning processes for question answering. Experiments on 17 unified models reveal two key findings: (i) Cross-modal reasoning determines visual generation quality, with interleaved models significantly outperforming non-interleaved ones; notably, combining strong unimodal models fails to achieve comparable reasoning. (ii) Models show dissociation between physical and symbolic reasoning: they succeed at interpreting perceptual concepts literally but fail to construct visual abstractions for symbolic tasks, where faulty reasoning harms performance. These results highlight reciprocal cross-modal reasoning as a critical frontier for enabling true omnimodal generation.
         </p>
 
     <!-- Data Statistics Visualization -->
