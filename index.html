@@ -143,8 +143,8 @@
 
            /* Leaderboard Styles */
         .leaderboard-table {
-            width: 140%;
-            margin-left: -20%;
+            width: 160%;
+            margin-left: -30%;
             border-collapse: separate;
             border-spacing: 0;
             background: #ffffff;
@@ -164,13 +164,15 @@
         }
 
         .leaderboard-table th {
-            padding: 14px 12px;
+            padding: 8px 12px;
             text-align: center;
             font-weight: 600;
             font-size: 13px;
             letter-spacing: 0.025em;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
+            background: #4a5568;
+            color: white;
         }
 
         .sortable-header {
@@ -223,9 +225,11 @@
             text-align: left;
             color: #2d3748;
             padding-left: 20px;
+            white-space: normal;
+            line-height: 1.6;
         }
         
-        .leaderboard-table td:nth-child(8) {
+        .leaderboard-table td:nth-child(7) {
             font-size: 15px;
             color: #2d3748;
         }
@@ -244,14 +248,16 @@
         }
 
         .model-badge {
-            display: inline-block;
+            display: block;
             padding: 2px 6px;
             border-radius: 4px;
             font-size: 11px;
             font-weight: 500;
-            margin-left: 8px;
+            margin-top: 4px;
+            margin-left: 0;
             text-transform: uppercase;
             letter-spacing: 0.025em;
+            width: fit-content;
         }
 
         .proprietary-badge {
@@ -1128,41 +1134,41 @@
                             'name': 'Natural Science',
                             'color': '#4DBEAA',
                             'sub_categories': [
-                                {'name': 'Temporal', 'count': 54},
-                                {'name': 'Spatial', 'count': 32},
-                                {'name': 'Causal', 'count': 31},
-                                {'name': 'Synthetic', 'count': 46},
-                                {'name': 'Quantitative', 'count': 60}
+                                {'name': 'Temporal', 'count': 60},
+                                {'name': 'Spatial', 'count': 24},
+                                {'name': 'Causal', 'count': 41},
+                                {'name': 'Imaginative', 'count': 50},
+                                {'name': 'Quantitative', 'count': 63}
                             ]
                         },
                         {
                             'name': 'Culture Art',
                             'color': '#FF7FB3',
                             'sub_categories': [
-                                {'name': 'Temporal', 'count': 46},
-                                {'name': 'Spatial', 'count': 61},
-                                {'name': 'Causal', 'count': 40},
-                                {'name': 'Synthetic', 'count': 100},
-                                {'name': 'Quantitative', 'count': 47}
+                                {'name': 'Temporal', 'count': 48},
+                                {'name': 'Spatial', 'count': 60},
+                                {'name': 'Causal', 'count': 42},
+                                {'name': 'Imaginative', 'count': 111},
+                                {'name': 'Quantitative', 'count': 19}
                             ]
                         },
                         {
                             'name': 'Common Sense',
                             'color': '#5DADE2',
                             'sub_categories': [
-                                {'name': 'Temporal', 'count': 55},
-                                {'name': 'Spatial', 'count': 97},
-                                {'name': 'Causal', 'count': 35},
-                                {'name': 'Synthetic', 'count': 37},
-                                {'name': 'Quantitative', 'count': 23}
+                                {'name': 'Temporal', 'count': 54},
+                                {'name': 'Spatial', 'count': 102},
+                                {'name': 'Causal', 'count': 22},
+                                {'name': 'Imaginative', 'count': 43},
+                                {'name': 'Quantitative', 'count': 28}
                             ]
                         },
                         {
                             'name': 'Logic',
                             'color': '#FFB347',
                             'sub_categories': [
-                                {'name': 'Abstract', 'count': 80},
-                                {'name': 'Math', 'count': 60}
+                                {'name': 'Puzzle', 'count': 101},
+                                {'name': 'Geometry', 'count': 40}
                             ]
                         }
                     ]
@@ -1201,7 +1207,7 @@
                 }
 
                 // 第三层：7种Reasoning类型
-                let reasoningList = ['Temporal', 'Spatial', 'Causal', 'Synthetic', 'Quantitative', 'Abstract', 'Math'];
+                let reasoningList = ['Temporal', 'Spatial', 'Causal', 'Imaginative', 'Quantitative', 'Puzzle', 'Geometry'];
                 let reasoningIndices = {};
                 let reasoningTotals = {};
                 for (let r of reasoningList) {
@@ -1334,24 +1340,23 @@
                             'name': 'World Model',
                             'color': '#90C695',
                             'sub_categories': [
-                                {'name': 'Embodied', 'count': 46},
-                                {'name': 'Physical', 'count': 32},
+                                {'name': 'Embodied', 'count': 60},
+                                {'name': 'Physical', 'count': 48},
                             ]
                         },
                         {
-                            'name': 'Logical\nAssistance',
+                            'name': 'Logic & Math',
                             'color': '#F0D568',
                             'sub_categories': [
-                                {'name': 'Geometry', 'count': 80},
-                                {'name': 'Puzzles', 'count': 70}
+                                {'name': 'Geometry', 'count': 138},
                             ]
                         },
                         {
                             'name': 'Visual\nPerception',
                             'color': '#F2B5D4',
                             'sub_categories': [
-                                {'name': 'Jigsaw', 'count': 78},
-                                {'name': 'Spatial', 'count': 75},
+                                {'name': 'Jigsaw Puzzle', 'count': 101},
+                                {'name': 'Multi-view Reasoning', 'count': 57},
                             ]
                         }
                     ]
@@ -1390,7 +1395,7 @@
                 }
 
                 // 第三层：6种Reasoning类型
-                let reasoningList = ['Physical', 'Embodied', 'Geometry', 'Puzzles', 'Jigsaw', 'Spatial'];
+                let reasoningList = ['Physical', 'Embodied', 'Geometry', 'Jigsaw Puzzle', 'Multi-view Reasoning'];
                 let reasoningIndices = {};
                 let reasoningTotals = {};
                 for (let r of reasoningList) {
@@ -1544,7 +1549,7 @@
 
         <div class="category-nav">
             <button class="category-btn active" onclick="showCategoryTG('world-model')">World Model</button>
-            <button class="category-btn" onclick="showCategoryTG('logic-assistant')">Logic Assistant</button>
+            <button class="category-btn" onclick="showCategoryTG('logic-assistant')">Logic & Math</button>
             <button class="category-btn" onclick="showCategoryTG('visual-perception')">Visual Perception</button>
                 </div>
     
@@ -1857,7 +1862,7 @@
                           </span> requires models to use information from one modality to inform and improve outputs in another. </p>
                     <d-figure id="fig-task-demo" >
                         <figure>
-                            <img data-zoomable="" draggable="false" src="static/img/data.png" alt="benchmark category">
+                            <img data-zoomable="" draggable="false" src="static/img/data_ig.png" alt="benchmark category">
                             <figcaption style="text-align: center; margin-top: 20px;">
                                 <strong>Figure 2: Verbally-Augmented Reasoning for Visual Generation.</strong>
                                 The benchmark spans 4 domains (natural science, culture and art, common sense, and logic), instantiated across 7 reasoning subtasks.
@@ -1866,10 +1871,10 @@
                     </d-figure>
                     <d-figure id="fig-task-demo" >
                         <figure>
-                            <img data-zoomable="" draggable="false" src="static/img/data_gtr.png" alt="benchmark category">
+                            <img data-zoomable="" draggable="false" src="static/img/data_tg.png" alt="benchmark category">
                             <figcaption style="text-align: center; margin-top: 20px;">
                                 <strong>Figure 3: Visually-Augmented Reasoning for Verbal Generation.</strong>
-                                The benchmark spans 3 scenarios and 6 subtasks: physical world modeling, logical assistance, and visual perception enhancement.
+                                The benchmark spans 3 scenarios and 6 subtasks: physical world modeling, logic & math, and visual perception.
                             </figcaption>
                         </figure>
                     </d-figure>
@@ -1883,7 +1888,7 @@
 
                 <p class="text" align="justify">
                     <strong>Visually-Augmented Reasoning for Verbal Generation:</strong>
-                    This setting evaluates whether models can generate intermediate visualizations that strengthen their own reasoning processes. Unlike text-only Chain-of-Thought, we examine scenarios where models generate intermediate visual representations to facilitate reasoning. The benchmark focuses on 3 scenarios: physical world modeling (functioning as world simulators), logical assistance (generating visual aids for abstract problems), and visual perception enhancement (creating supportive images for challenging perception tasks).
+                    This setting evaluates whether models can generate intermediate visualizations that strengthen their own reasoning processes. Unlike text-only Chain-of-Thought, we examine scenarios where models generate intermediate visual representations to facilitate reasoning. The benchmark focuses on 3 scenarios: physical world modeling (functioning as world simulators), logic and math (generating visual aids for symbolic problems), and visual perception (creating supportive images for challenging perception tasks).
                 </p>
 
             </div>
@@ -1915,201 +1920,284 @@
             <div class="leaderboard-container">
                 <div class="leaderboard-header">
                     <p class="text" align="justify">
-                        <!-- Contact information removed for privacy. The scores in the leaderboard are calculated using weighted formula. -->
-                        The scores in the leaderboard are calculated using the weighted formula: 20% × VC + 20% × IQ + 60% × RV in <strong>ROVER-IG</strong>.
+                        <!-- Contact information removed for privacy. -->
+                        The table shows ROVER-IG performance (Reasoning Visual, RV) with four domain columns (Nature Science, Culture/Art, Common Sense, Logic), and ROVER-TG performance (Accuracy, Acc.) with three categories (World Model, Logic & Math, Visual Perception).
                     </p>
                 </div>
 
                 <table class="leaderboard-table">
                     <thead>
                         <tr class="header-group">
-                            <th rowspan="2" data-column-index="0">Model</th>
-                            <th rowspan="2" data-column-index="1">Organizor</th>
-                            <th rowspan="2" data-column-index="2">Params</th>
-                            <th rowspan="2" data-column-index="3">Date</th>
-                            <th rowspan="2" data-column-index="4">Nature Science</th>
-                            <th rowspan="2" data-column-index="5">Culture / Art</th>
-                            <th rowspan="2" data-column-index="6">Common Sense</th>
-                            <th rowspan="2" data-column-index="7">Logic</th>
-                            <th rowspan="2" data-column-index="8">Average</th>
+                            <th rowspan="3" data-column-index="0">Model</th>
+                            <th rowspan="3" data-column-index="1">Organizor</th>
+                            <th rowspan="3" data-column-index="2">Date</th>
+                            <th colspan="5" data-column-index="3">ROVER-IG</th>
+                            <th colspan="4" data-column-index="8">ROVER-TG</th>
+                        </tr>
+                        <tr>
+                            <th data-column-index="3">Nature Science</th>
+                            <th data-column-index="4">Culture & Art</th>
+                            <th data-column-index="5">Common Sense</th>
+                            <th data-column-index="6">Logic</th>
+                            <th data-column-index="7" class="sortable-header">Average</th>
+                            <th data-column-index="8">World Model</th>
+                            <th data-column-index="9">Logic & Math</th>
+                            <th data-column-index="10">Visual Perception</th>
+                            <th data-column-index="11">Average</th>
                         </tr>
                     </thead>
                     <tbody id="leaderboard-body">
                         <tr>
-                            <td>Nano Banana <span class="model-badge proprietary-badge">Proprietary</span></td>
-                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2sSeQqjaUTuZ3gRgkKjidpaipF_l6s72lBw&s" alt="Google" class="org-logo"></td>
+                            <td>Qwen-Image-Edit <span class="model-badge edit-badge">EDIT</span></td>
+                            <td><img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/light/qwen-color.png" alt="Qwen" class="org-logo"></td>
+                            <td>2025-09</td>
+                            <td>46.7</td>
+                            <td>62.5</td>
+                            <td>53.1</td>
+                            <td>30.4</td>
+                            <td>47.1</td>
                             <td>-</td>
-                            <td>2025-08-22</td>
-                            <td class="best-score">80.9</td>
-                            <td class="best-score">79.5</td>
-                            <td class="best-score">81.1</td>
-                            <td class="best-score">63.3</td>
-                            <td class="best-score">76.2</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                         <tr>
-                            <td>Gemini 2.0 Flash <span class="model-badge proprietary-badge">Proprietary</span></td>
-                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2sSeQqjaUTuZ3gRgkKjidpaipF_l6s72lBw&s" alt="Google" class="org-logo"></td>
+                            <td>FLUX.1 Kontext <span class="model-badge edit-badge">EDIT</span></td>
+                            <td><img src="https://avatars.githubusercontent.com/u/164064024?s=200&v=4" alt="Organization" class="org-logo"></td>
+                            <td>2025-06</td>
+                            <td>37.4</td>
+                            <td>44.9</td>
+                            <td>42.3</td>
+                            <td>20.2</td>
+                            <td>40.9</td>
                             <td>-</td>
-                            <td>2025-02-05</td>
-                            <td>72.0</td>
-                            <td>72.9</td>
-                            <td>73.2</td>
-                            <td>55.0</td>
-                            <td>68.3</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                         <tr>
-                            <td>GPT-5 <span class="model-badge proprietary-badge">Proprietary</span></td>
-                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxWDMBbvfm-mFBdcmaFchGGSy8ciuUcapxhQ&s" alt="OpenAI" class="org-logo"></td>
+                            <td>UltraEdit(SD3) <span class="model-badge edit-badge">EDIT</span></td>
+                            <td><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Peking_University_seal.svg/250px-Peking_University_seal.svg.png" alt="Peking University" class="org-logo"></td>
+                            <td>2024-07</td>
+                            <td>27.0</td>
+                            <td>45.2</td>
+                            <td>27.9</td>
+                            <td>25.2</td>
+                            <td>34.6</td>
                             <td>-</td>
-                            <td>2025-08-07</td>
-                            <td>74.9</td>
-                            <td>74.5</td>
-                            <td>72.8</td>
-                            <td>59.8</td>
-                            <td>70.5</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                         <tr>
-                            <td>BAGEL-Think <span class="model-badge open-badge">Open Source</span></td>
-                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs6qoNHcWK4n-kjbrVhFX322hGtcEGc3CZyg&s" alt="ByteDance Seed" class="org-logo"></td>
-                            <td>14B</td>
-                            <td>2025-05-23</td>
-                            <td>61.1</td>
-                            <td>65.7</td>
-                            <td>65.0</td>
+                            <td>VAREdit-8B <span class="model-badge edit-badge">EDIT</span></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMj8l7uJk1KDRHIv1gzTT360HUrRDtDgzqtv15wEMZZ3MuSPjWTzBR_YJ_CMhSUXIqT6U&usqp=CAU" alt="Organization" class="org-logo"></td>
+                            <td>2025-08</td>
+                            <td>34.6</td>
+                            <td>46.5</td>
+                            <td>33.6</td>
+                            <td>17.4</td>
                             <td>37.5</td>
-                            <td>57.3</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                         <tr>
-                            <td>BAGEL <span class="model-badge open-badge">Open Source</span></td>
-                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs6qoNHcWK4n-kjbrVhFX322hGtcEGc3CZyg&s" alt="ByteDance Seed" class="org-logo"></td>
-                            <td>14B</td>
-                            <td>2025-05-23</td>
-                            <td>46.2</td>
-                            <td>53.9</td>
-                            <td>51.6</td>
-                            <td>44.1</td>
-                            <td>49.0</td>
+                            <td>Step1X-Edit v1.1 <span class="model-badge edit-badge">EDIT</span></td>
+                            <td><img src="https://avatars.githubusercontent.com/u/178004800?s=280&v=4" alt="StepFun" class="org-logo"></td>
+                            <td>2025-04</td>
+                            <td>38.2</td>
+                            <td>50.5</td>
+                            <td>35.2</td>
+                            <td>16.1</td>
+                            <td>42.1</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                         <tr>
                             <td>Step1X-Edit v1.2 <span class="model-badge open-badge">Open Source</span></td>
                             <td><img src="https://avatars.githubusercontent.com/u/178004800?s=280&v=4" alt="StepFun" class="org-logo"></td>
+                            <td>2025-09</td>
+                            <td>46.2</td>
+                            <td>50.6</td>
+                            <td>46.1</td>
+                            <td>18.4</td>
+                            <td>57.4</td>
                             <td>-</td>
-                            <td>2025-09-08</td>
-                            <td>59.2</td>
-                            <td>58.8</td>
-                            <td>57.0</td>
-                            <td>37.7</td>
-                            <td>53.2</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Nano Banana <span class="model-badge proprietary-badge">Proprietary</span></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2sSeQqjaUTuZ3gRgkKjidpaipF_l6s72lBw&s" alt="Google" class="org-logo"></td>
+                            <td>2025-08</td>
+                            <td>77.3</td>
+                            <td>76.6</td>
+                            <td>74.8</td>
+                            <td>55.1</td>
+                            <td class="best-score">73.2</td>
+                            <td>40.6</td>
+                            <td>44.9</td>
+                            <td>50.0</td>
+                            <td class="best-score">43.6</td>
+                        </tr>
+                        <tr>
+                            <td>GPT-5 <span class="model-badge proprietary-badge">Proprietary</span></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxWDMBbvfm-mFBdcmaFchGGSy8ciuUcapxhQ&s" alt="OpenAI" class="org-logo"></td>
+                            <td>2025-08</td>
+                            <td>71.3</td>
+                            <td>72.6</td>
+                            <td>65.3</td>
+                            <td>45.8</td>
+                            <td>63.7</td>
+                            <td>39.2</td>
+                            <td>45.6</td>
+                            <td>45.5</td>
+                            <td>43.4</td>
+                        </tr>
+                        <tr>
+                            <td>BAGEL-Think <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs6qoNHcWK4n-kjbrVhFX322hGtcEGc3CZyg&s" alt="ByteDance Seed" class="org-logo"></td>
+                            <td>2025-05</td>
+                            <td>54.0</td>
+                            <td>63.7</td>
+                            <td>55.9</td>
+                            <td>20.8</td>
+                            <td>52.7</td>
+                            <td>26.6</td>
+                            <td>24.6</td>
+                            <td>34.1</td>
+                            <td>28.4</td>
+                        </tr>
+                        <tr>
+                            <td>Gemini 2.0 Flash <span class="model-badge proprietary-badge">Proprietary</span></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2sSeQqjaUTuZ3gRgkKjidpaipF_l6s72lBw&s" alt="Google" class="org-logo"></td>
+                            <td>2025-02</td>
+                            <td>68.8</td>
+                            <td>71.9</td>
+                            <td>66.1</td>
+                            <td>42.6</td>
+                            <td>62.3</td>
+                            <td>35.6</td>
+                            <td>30.4</td>
+                            <td>43.0</td>
+                            <td>36.3</td>
                         </tr>
                         <tr>
                             <td>UniCoT <span class="model-badge open-badge">Open Source</span></td>
                             <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp27xpoGxMSx00xOzinbOVUv4jhlDK_2mLWQ&s" alt="Fudan" class="org-logo"></td>
-                            <td>14B</td>
-                            <td>2025-07-29</td>
-                            <td>49.1</td>
-                            <td>69.4</td>
-                            <td>63.6</td>
-                            <td>28.2</td>
-                            <td>52.6</td>
+                            <td>2025-07</td>
+                            <td>38.2</td>
+                            <td>63.9</td>
+                            <td>56.3</td>
+                            <td>21.5</td>
+                            <td>47.4</td>
+                            <td>26.7</td>
+                            <td>21.7</td>
+                            <td>34.1</td>
+                            <td>27.5</td>
                         </tr>
                         <tr>
-                            <td>BLIP3o-NEXT <span class="model-badge open-badge">Open Source</span></td>
-                            <td><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Salesforce.com_logo.svg/2560px-Salesforce.com_logo.svg.png" alt="Salesforce" class="org-logo"></td>
-                            <td>8B</td>
-                            <td>2025-08-04</td>
-                            <td>50.2</td>
-                            <td>52.0</td>
-                            <td>56.0</td>
-                            <td>43.2</td>
-                            <td>50.3</td>
+                            <td>BAGEL <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs6qoNHcWK4n-kjbrVhFX322hGtcEGc3CZyg&s" alt="ByteDance Seed" class="org-logo"></td>
+                            <td>2025-05</td>
+                            <td>35.9</td>
+                            <td>49.2</td>
+                            <td>42.0</td>
+                            <td>27.1</td>
+                            <td>40.5</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                         <tr>
                             <td>UniPic2-Metaquery-9B  <span class="model-badge open-badge">Open Source</span></td>
                             <td><img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/skywork-color.png" alt="Skywork" class="org-logo"></td>
-                            <td>9B</td>
-                            <td>2025-04-28</td>
-                            <td>50.2</td>
-                            <td>48.1</td>
-                            <td>49.3</td>
-                            <td>43.1</td>
-                            <td>47.6</td>
+                            <td>2025-04</td>
+                            <td>33.8</td>
+                            <td>52.7</td>
+                            <td>43.2</td>
+                            <td>27.1</td>
+                            <td>39.2</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>BLIP3o-NEXT <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Salesforce.com_logo.svg/2560px-Salesforce.com_logo.svg.png" alt="Salesforce" class="org-logo"></td>
+                            <td>2025-08</td>
+                            <td>38.2</td>
+                            <td>47.5</td>
+                            <td>43.3</td>
+                            <td>22.5</td>
+                            <td>37.8</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                         <tr>
                             <td>Emu2-Gen <span class="model-badge open-badge">Open Source</span></td>
                             <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6zMR9FgVa8FsVeJH9EU36oR0Ln7cfJI9mKzP-2tlOVoh04S0pLpmBTY0l_9zkIdM4GPs&usqp=CAU" alt="BAAI" class="org-logo"></td>
-                            <td>8B</td>
-                            <td>2025-02-13</td>
-                            <td>52.2</td>
-                            <td>47.5</td>
-                            <td>49.5</td>
-                            <td>43.7</td>
-                            <td>48.2</td>
+                            <td>2025-02</td>
+                            <td>29.1</td>
+                            <td>42.6</td>
+                            <td>37.4</td>
+                            <td>20.3</td>
+                            <td>32.3</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                         <tr>
                             <td>OmniGen2 <span class="model-badge open-badge">Open Source</span></td>
                             <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6zMR9FgVa8FsVeJH9EU36oR0Ln7cfJI9mKzP-2tlOVoh04S0pLpmBTY0l_9zkIdM4GPs&usqp=CAU" alt="BAAI" class="org-logo"></td>
-                            <td>27B</td>
-                            <td>2025-06-16</td>
-                            <td>48.2</td>
-                            <td>49.5</td>
-                            <td>51.3</td>
-                            <td>42.6</td>
-                            <td>47.9</td>
-                        </tr>
-                        <tr>
-                            <td>Qwen-Image-Edit <span class="model-badge edit-badge">Edit</span></td>
-                            <td><img src="https://avatars.githubusercontent.com/u/141221163?s=200&v=4" alt="Qwen" class="org-logo"></td>
-                            <td>20B</td>
-                            <td>2025-08-04</td>
-                            <td>59.8</td>
-                            <td>70.5</td>
-                            <td>65.6</td>
-                            <td>48.6</td>
-                            <td>61.1</td>
-                        </tr>
-                        <tr>
-                            <td>FLUX.1 Kontext <span class="model-badge edit-badge">Edit</span></td>
-                            <td><img src="https://avatars.githubusercontent.com/u/164064024?s=200&v=4" alt="Black Forest Labs" class="org-logo"></td>
-                            <td>12B</td>
-                            <td>2025-08-06</td>
-                            <td>51.5</td>
-                            <td>57.6</td>
-                            <td>54.8</td>
-                            <td>37.9</td>
-                            <td>50.5</td>
-                        </tr>
-                        <tr>
-                            <td>UltraEdit(SD3) <span class="model-badge edit-badge">Edit</span></td>
-                            <td><img src="https://avatars.githubusercontent.com/u/135824553?s=200&v=4" alt="PKU" class="org-logo"></td>
-                            <td>2B</td>
-                            <td>2024-08-31</td>
-                            <td>40.1</td>
-                            <td>51.4</td>
-                            <td>39.1</td>
-                            <td>42.4</td>
-                            <td>43.3</td>
-                        </tr>
-                        <tr>
-                            <td>VAREdit-8B <span class="model-badge edit-badge">Edit</span></td>
-                            <td><img src="https://avatars.githubusercontent.com/u/199627684?s=200&v=4" alt="HiDream-ai" class="org-logo"></td>
-                            <td>8B</td>
-                            <td>2025-08-21</td>
-                            <td>48.7</td>
-                            <td>55.2</td>
-                            <td>47.0</td>
-                            <td>31.2</td>
-                            <td>45.5</td>
-                        </tr>
-                        <tr>
-                            <td>Step1X-Edit v1.1 <span class="model-badge edit-badge">Edit</span></td>
-                            <td><img src="https://avatars.githubusercontent.com/u/178004800?s=280&v=4" alt="StepFun" class="org-logo"></td>
+                            <td>2025-06</td>
+                            <td>27.4</td>
+                            <td>42.3</td>
+                            <td>39.2</td>
+                            <td>20.2</td>
+                            <td>32.2</td>
                             <td>-</td>
-                            <td>2025-06-09</td>
-                            <td>55.2</td>
-                            <td>59.6</td>
-                            <td>51.8</td>
-                            <td>39.1</td>
-                            <td>51.4</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Ovis-U1 <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://avatars.githubusercontent.com/u/172576026?v=4" alt="Organization" class="org-logo"></td>
+                            <td>2025-06</td>
+                            <td>28.6</td>
+                            <td>44.3</td>
+                            <td>42.1</td>
+                            <td>20.5</td>
+                            <td>33.8</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>ILLUME+ <span class="model-badge open-badge">Open Source</span></td>
+                            <td><img src="https://avatars.githubusercontent.com/u/12619994?s=280&v=4" alt="Organization" class="org-logo"></td>
+                            <td>2025-04</td>
+                            <td>28.1</td>
+                            <td>43.2</td>
+                            <td>36.9</td>
+                            <td>20.1</td>
+                            <td>32.0</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                     </tbody>
                 </table>
@@ -2126,21 +2214,21 @@
             <div class="keyfinding-wrap">
               <div class="keyfinding-card">
                 <h4 class="keyfinding-title">Key Finding 1</h4>
-                <p class="keyfinding-text">Cross-modal reasoning capabilities and alignment strongly correlate with visual generation effectiveness.</p>
+                <p class="keyfinding-text">Interleaved image-text generation models significantly outperform non-interleaved ones, demonstrating that cross-modal reasoning is essential for high-quality reasoning-dependent visual generation.</p>
               </div>
             </div>
 
             <div class="keyfinding-wrap">
               <div class="keyfinding-card">
                 <h4 class="keyfinding-title">Key Finding 2</h4>
-                <p class="keyfinding-text">Unified models capable of interleaved image-text generation demonstrate superior reasoning-dependent visual generation performance.</p>
+                <p class="keyfinding-text">Combining strong unimodal models fails to replicate cross-modal reasoning on ROVER, indicating that reciprocal cross-modal reasoning emerges only through unified multimodal architecture, not through external composition.</p>
               </div>
             </div>
 
             <div class="keyfinding-wrap">
               <div class="keyfinding-card">
                 <h4 class="keyfinding-title">Key Finding 3</h4>
-                <p class="keyfinding-text">Current models remain severely limited in visually-augmented reasoning, showing relative strength in perception and physical modeling but weakness in logical tasks.</p>
+                <p class="keyfinding-text">Models show a fundamental gap between physical and symbolic reasoning: while excelling at literal visual interpretation for perceptual tasks, they struggle to construct visual abstractions as symbolic representations, leading reasoning failures to harm rather than improve performance.</p>
               </div>
             </div>
             <br>
@@ -2159,6 +2247,21 @@
                 </d-figure>
 
                 <p class="text" align="justify">
+                <strong>Do visual reasoning artifacts help?</strong>:
+                To investigate whether visual reasoning artifacts from UMMs can enhance downstream reasoning in VLMs, we conduct a controlled study where visual reasoning outputs from unified models assist VLM reasoning.
+                Key findings reveal that visual reasoning quality determines its effectiveness:
+                (1) UMMs successfully augment VLMs on perceptual tasks. Visual reasoning improves Qwen2.5-VL-7B's performance on physical world modeling and visual perception tasks, where UMMs generate reliable visual intermediates.
+                (2) Low-quality visual reasoning hinders rather than helps, when UMMs struggle to produce valid symbolic visual representations.
+                </p>
+            <d-figure id="fig-cascade-analysis">
+                    <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/vis_vlm.png" alt="Cascade Analysis" loading="lazy">
+                        <figcaption style="text-align: center; margin-top: 20px;">
+                        <strong>Figure 7</strong>: Visual reasoning augmentation evaluation across three problem domains. We compare VLM performance w/ and w/o visual reasoning artifacts from UMMs.
+                        </figcaption>
+                    </figure>
+                </d-figure>
+                <p class="text" align="justify">
                 <strong>Coherence Between Reasoning Subtasks</strong>:
                 Analysis reveals uneven performance across reasoning dimensions, with models excelling in temporal, spatial, and causal reasoning while struggling with abstract and mathematical tasks. This pattern indicates that current UMMs better handle concrete, observable phenomena than symbolic reasoning. Strong interdependence among physical reasoning types suggests shared mechanisms for processing spatiotemporal relationships, while abstract reasoning develops as a distinct capability.
             </p>
@@ -2167,7 +2270,7 @@
                     <figure>
                     <img data-zoomable="" draggable="false" src="static/img/reasoning.png" alt="Reasoning Analysis" loading="lazy">
                         <figcaption style="text-align: center; margin-top: 20px;">
-                        <strong>Figure 7</strong>: Analysis of reasoning capabilities showing performance patterns across different reasoning subtasks and their correlations.
+                        <strong>Figure 8</strong>: Analysis of reasoning capabilities showing performance patterns across different reasoning subtasks and their correlations.
                         </figcaption>
                     </figure>
                 </d-figure>
@@ -2181,7 +2284,7 @@
                         <figure>
                     <img data-zoomable="" draggable="false" src="static/img/vlm_evaluation_metrics.png" alt="Evaluation Reliability" loading="lazy">
                             <figcaption style="text-align: center; margin-top: 20px;">
-                        <strong>Figure 8</strong>: Evaluation reliability of GPT-4.1 across five assessment dimensions, showing Pearson correlation coefficients and Mean Absolute Error compared to human experts.
+                        <strong>Figure 9</strong>: Evaluation reliability of GPT-4.1 across five assessment dimensions, showing Pearson correlation coefficients and Mean Absolute Error compared to human experts.
                             </figcaption>
                         </figure>
                     </d-figure>
@@ -2220,9 +2323,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const thead = table.querySelector('thead');
     const tbody = document.getElementById('leaderboard-body');
     
-    // Default sort configuration: by 'Avg.' column (index 8), descending.
+    // Default sort configuration: by 'ROVER-IG Average' column (index 7), descending.
     let sortConfig = {
-        columnIndex: 8, 
+        columnIndex: 7, 
         direction: 'desc'
     };
 
