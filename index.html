@@ -19,7 +19,7 @@
         <meta property="og:title" content="ROVER:Benchmarking Reciprocal Cross-Modal Reasoning for Omnimodal Generation" />
         
         <!-- Twitter -->
-        <meta name="twitter:url" content="" />
+        <meta name="twitter:url" content="https://x.com/cheryyun_l/status/1985838110186619102" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="" />
         <meta name="twitter:title" content="ROVER: Benchmarking Reciprocal Cross-Modal Reasoning for Omnimodal Generation" />
@@ -1562,6 +1562,10 @@
                 <img class="top-thumbnail" src="./static/img/demo-vr/em_3.png" alt="World Model 3" onclick="showDetailTG('world-model', 'item3')">
                 <img class="top-thumbnail" src="./static/img/demo-vr/em_4.png" alt="World Model 4" onclick="showDetailTG('world-model', 'item4')">
                 <img class="top-thumbnail" src="./static/img/demo-vr/em_5.png" alt="World Model 5" onclick="showDetailTG('world-model', 'item5')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/phys_1.png" alt="World Model 6" onclick="showDetailTG('world-model', 'item6')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/phys_2.png" alt="World Model 7" onclick="showDetailTG('world-model', 'item7')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/phys_3.png" alt="World Model 8" onclick="showDetailTG('world-model', 'item8')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/phys_4.png" alt="World Model 9" onclick="showDetailTG('world-model', 'item9')">
             </div>
     
             <!-- Logic Assistant Thumbnails -->
@@ -1580,6 +1584,11 @@
                 <img class="top-thumbnail" src="./static/img/demo-vr/vis_3.jpg" alt="Visual Perception 3" onclick="showDetailTG('visual-perception', 'item3')">
                 <img class="top-thumbnail" src="./static/img/demo-vr/vis_4.jpg" alt="Visual Perception 4" onclick="showDetailTG('visual-perception', 'item4')">
                 <img class="top-thumbnail" src="./static/img/demo-vr/vis_5.jpg" alt="Visual Perception 5" onclick="showDetailTG('visual-perception', 'item5')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/per_1.png" alt="Visual Perception 6" onclick="showDetailTG('visual-perception', 'item6')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/per_2.png" alt="Visual Perception 7" onclick="showDetailTG('visual-perception', 'item7')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/per_3.png" alt="Visual Perception 8" onclick="showDetailTG('visual-perception', 'item8')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/per_4.png" alt="Visual Perception 9" onclick="showDetailTG('visual-perception', 'item9')">
+                <img class="top-thumbnail" src="./static/img/demo-vr/per_5.png" alt="Visual Perception 10" onclick="showDetailTG('visual-perception', 'item10')">
     </div>
 </div>
 
@@ -1646,51 +1655,95 @@
                         chart: './static/img/demo-vr/em_1.png',
                         reasoning_type: 'Embodied',
                         prompt: 'Generate a 10-point end-effector trajectory visualization for the task: Remove the lid from the blue container. Then output the corresponding action trajectory coordinates (x, y) on the image.',
-                        answer: '[(600,800), (900,700), (1000,550), (1000,480), (1000,450), (1000,430), (1000,250), (1000,150), (1000,100), (950,80)]',
+                        answer: '[[1639, 212],[1685, 325],[1718, 424],[1738, 573],[1610, 476],[1395, 512],[1197, 554],[1111, 669],[1092, 830],[1068, 1085]]',
                         nano: './static/img/nano-vr/em_1.png',
-                        nano_text: 'Generated action trajectory: [(110,700), (280,615), (380,570), (490,530), (615,485), (730,435), (750,400), (900,360), (1065,340), (1055,215)]',
+                        nano_text: 'Generated action trajectory: [[1600, 200], [1600, 400], [1600, 600], [1700, 800], [1750, 900], [1750, 800], [1800, 700], [1850, 600], [1900, 500], [1950, 400]]',
                         gpt: './static/img/gpt-vr/em_1.png',
-                        gpt_text: 'Generated action trajectory: [(500,820), (760,780), (870,700), (1070,600), (850,440), (990,400), (850,330), (770,210), (950,150), (820,80)]'
+                        gpt_text: 'Generated action trajectory: [[1800, 200], [1700, 300], [1600, 400], [1500, 500], [1500, 600], [1500, 680], [1500, 580], [1650, 580], [1800, 580], [1800, 600]]'
                     },
                     'item2': {
                         chart: './static/img/demo-vr/em_2.png',
                         reasoning_type: 'Embodied',
                         prompt: 'Generate a 10-point end-effector trajectory visualization for the task: Place the beef in the strainer. Then output the corresponding action trajectory coordinates (x, y) on the image.',
-                        answer: '[(400,450), (500,480), (600,500), (700,520), (750,560), (780,580), (780,600), (780,620), (780,640), (780,660)]',
+                        answer: '[[873, 731],[951, 744],[1019, 754],[1147, 820],[1052, 822],[1011, 888],[1079, 938],[1148, 982],[1220, 953],[1321, 942]]',
                         nano: './static/img/nano-vr/em_2.png',
-                        nano_text: 'Generated action trajectory: [(160,460), (250,470), (340,480), (500,470), (560,500), (630,530), (700,570), (780,600), (880,470), (960,540)]',
+                        nano_text: 'Generated action trajectory: [[860, 680], [865, 630], [920, 580], [1050, 540], [1200, 520], [1350, 530], [1480, 570], [1560, 630], [1590, 700], [1600, 760]]',
                         gpt: './static/img/gpt-vr/em_2.png',
-                        gpt_text: 'Generated action trajectory: [(530,90), (470,170), (660,200), (760,310), (1000,400), (350,460), (490,560), (680,680), (750,735), (870,680)]'
+                        gpt_text: 'Generated action trajectory: [[750, 600], [750, 500], [800, 400], [900, 400], [1000, 400], [1050, 500], [1070, 600], [1080, 700], [1090, 780], [1090, 800]]'
                     },
                     'item3': {
                         chart: './static/img/demo-vr/em_3.png',
                         reasoning_type: 'Embodied',
                         prompt: 'Generate a 10-point end-effector trajectory visualization for the task: Pour water through the coffee filter. Then output the corresponding action trajectory coordinates (x, y) on the image.',
-                        answer: '[(950,520), (950,400), (950,300), (650,320), (480,380), (480,420), (480,440), (480,420), (650,350), (850,400)]',
+                        answer: '[[1751, 573],[1724, 675],[1654, 695],[1594, 619],[1579, 546],[1572, 486],[1518, 461],[1459, 448],[1376, 458],[1292, 496]]',
                         nano: './static/img/nano-vr/em_3.png',
-                        nano_text: 'Generated action trajectory: [(130,695), (240,655), (300,615), (420,505), (520,330), (835,230), (715,495), (1085,445), (990,515), (1025,540)]',
+                        nano_text: 'Generated action trajectory: [[1975, 710], [1850, 600], [1650, 520], [1450, 480], [1250, 460], [1050, 480], [980, 520], [950, 580], [940, 620], [935, 640]]',
                         gpt: './static/img/gpt-vr/em_3.png',
-                        gpt_text: 'Generated action trajectory: [(240,600), (240,500), (180,395), (270,285), (420,120), (615,65), (840,165), (890,275), (1020,380), (980,470)]'
-                    },
+                        gpt_text: 'Generated action trajectory: [[1400, 750], [1400, 650], [1200, 550], [900, 480], [630, 400], [630, 440], [650, 460], [630, 400], [1000, 500], [1400, 700]]'
+                    }, 
                     'item4': {
                         chart: './static/img/demo-vr/em_4.png',
                         reasoning_type: 'Embodied',
                         prompt: 'Generate a 10-point end-effector trajectory visualization for the task: Put the blue block onto the green car. Then output the corresponding action trajectory coordinates (x, y) on the image.',
-                        answer: '[(850,600), (750,550), (700,600), (700,620), (700,600), (400,550), (250,500), (250,480), (250,500), (350,550)]',
+                        answer: '[[1317,491],[1363,675],[1398,815],[1427,987],[1306,855],[1235,749],[1046,738],[872,740],[727,766],[646,873]]',
                         nano: './static/img/nano-vr/em_4.png',
-                        nano_text: 'Generated action trajectory: [(235,450), (285,410), (363,375), (443,318), (530,365), (608,335), (730,400), (780,515), (890,590), (915,630)]',
+                        nano_text: 'Generated action trajectory: [[1200, 300], [1250, 450], [1350, 650], [1550, 950], [1500, 800], [1000, 800], [600, 800], [350, 800], [300, 800], [300, 600]]',
                         gpt: './static/img/gpt-vr/em_4.png',
-                        gpt_text: 'Generated action trajectory: [(530,75), (530,350), (750,220), (815,320), (735,400), (650,485), (620,565), (560,655), (525,715), (450,750)]'
+                        gpt_text: 'Generated action trajectory: [[1100, 500], [1300, 550], [1450, 800], [1500, 950], [1500, 700], [1200, 700], [800, 700], [400, 700], [400, 800], [400, 600]]'
                     },
                     'item5': {
                         chart: './static/img/demo-vr/em_5.png',
                         reasoning_type: 'Embodied',
                         prompt: 'Generate a 10-point end-effector trajectory visualization for the task: Place the white bowl on the cutting board. Then output the corresponding action trajectory coordinates (x, y) on the image.',
-                        answer: '[(900,350), (900,300), (600,400), (400,500), (300,580), (300,620), (300,640), (300,640), (300,600), (400,500)]',
+                        answer: '[[1548,732],[1570,827],[1568,939],[1538,1029],[1353,920],[1169,908],[970,920],[751,951],[605,1008],[517,1118]]',
                         nano: './static/img/nano-vr/em_5.png',
-                        nano_text: 'Generated action trajectory: [(880,290), (240,455), (245,515), (245,575), (245,635), (560,525), (560,595), (880,415), (850,475), (560,645)]',
+                        nano_text: 'Generated action trajectory: [[1350, 950], [1300, 850], [1200, 750], [1050, 700], [900, 700], [750, 750], [600, 850], [500, 900], [475, 925], [450, 950]]',
                         gpt: './static/img/gpt-vr/em_5.png',
-                        gpt_text: 'Generated action trajectory: [(575,140), (845,250), (325,220), (325,340), (425,485), (545,525), (635,590), (935,670), (760,760), (810,780)]'
+                        gpt_text: 'Generated action trajectory: [[1090, 680], [1090, 750], [1090, 800], [1090, 650], [900, 650], [700, 650], [500, 650], [430, 650], [430, 800], [430, 990]]'
+                    },
+                    'item6': {
+                        chart: './static/img/demo-vr/phys_1.png',
+                        ground_truth: './static/img/demo-vr/phys_1-2.png',
+                        reasoning_type: 'Physical',
+                        prompt: 'How many cubes on the tabletop will these two cars collide with? List them.',
+                        answer: 'Red cube, green cube, purple cube, yellow cube.',
+                        nano: './static/img/nano-vr/phys_1.png',
+                        nano_text: 'The generated simulation clearly shows that the pink car\'s trajectory leads it to collide with the light blue cube, and the green car\'s trajectory leads it to collide with the yellow cube. Final Answer: 2 cubes, Light blue and Yellow.',
+                        gpt: './static/img/gpt-vr/phys_1.png',
+                        gpt_text: 'Pink car collides with: blue cube (definitely), possibly red cube. Green car collides with: yellow cube (clearly in its path). The rest (purple, green, top-right yellow-greenish cube) remain stationary. Final Answer: The two cars will collide with three cubes: the blue, red, and yellow cubes.'
+                    },
+                    'item7': {  
+                        chart: './static/img/demo-vr/phys_2.png',
+                        ground_truth: './static/img/demo-vr/phys_2-2.png',
+                        reasoning_type: 'Physical',
+                        prompt: 'A playground contains obstacles of various colors and poses, along with randomly arranged pits. Soft balls are launched from various initial positions. These balls move dynamically, bouncing and undergoing permanent deformation, potentially colliding with obstacles and falling into pits. Will the brown ball finally drop into the right pit? A. Yes B. No C. Can not answer D. Uncertain.',
+                        answer: 'B. No',
+                        nano: './static/img/nano-vr/phys_2.png',
+                        nano_text: 'The simulated image shows that the brown ball falls straight down due to gravity. It lands directly into the middle pit. The orange and yellow balls also fall into their respective pits, but they are not the subject of the question. The brown ball does not hit any obstacles or deflect towards the right pit. Final Answer: B. No',
+                        gpt: './static/img/gpt-vr/phys_2.png',
+                        gpt_text: 'The brown ball collides with the green ramp and bounces slightly upward and leftward but does not align directly with the right pit. Instead, the yellow ball near the green ramp lands close to the pit opening. The brown ball remains above the ramp and does not drop into the right pit. Final Answer: B. No.'
+                    },
+                    'item8': {
+                        chart: './static/img/demo-vr/phys_3.png',
+                        ground_truth: './static/img/demo-vr/phys_3-2.png',
+                        reasoning_type: 'Physical',
+                        prompt: 'In this device, different colored liquids are released from emitters at the top. Gravity pulls them down fixed ramps that change their flow direction. In the image, liquid can be seen falling from some emitters at the top. Which container will catch the most liquid? (Choose from: cyan container, red container, grey container)',
+                        answer: 'Red container',
+                        nano: './static/img/nano-vr/phys_3.png',
+                        nano_text: 'Based on the simulation, the red container is positioned to collect liquid from two distinct sources, the orange and pink emitters, due to the configuration of the ramps. All other containers are positioned to collect liquid from only one emitter each. Final Answer: red container',
+                        gpt: './static/img/gpt-vr/phys_3.png',
+                        gpt_text: 'Based on the simulated scene, the cyan container catches the most liquid.'
+                    },
+                    'item9': {
+                        chart: './static/img/demo-vr/phys_4.png',
+                        ground_truth: './static/img/demo-vr/phys_4-2.png',
+                        reasoning_type: 'Physical',
+                        prompt: 'An array of both movable and fixed pulleys, along with anchor points, is arranged on a wall. Ropes are connected to pulleys, loads, or anchor points and can be wound around the pulleys. If we want the orange pulley to rotate clockwise, what can we do? (Select all answers that satisfy the conditions.) A. Increase the mass of the red cube B. Decrease the mass of the red cube C. Decrease the mass of the green cube D. Increase the mass of the green cube.',
+                        answer: 'A. Increase the mass of the red cube, C. Decrease the mass of the green cube',
+                        nano: './static/img/nano-vr/phys_4.png',
+                        nano_text: 'Increasing the mass of the red cube would increase its downward pull, causing the orange pulley to rotate clockwise. Similarly, decreasing the mass of the green cube would reduce its resistance, also allowing the red cube to cause clockwise rotation of the orange pulley. Final Answer: A, C',
+                        gpt: './static/img/gpt-vr/phys_4.png',
+                        gpt_text: 'Based on the generated simulation: The orange pulley rotates clockwise when the green cube moves upward and the red cube moves downward along the rope. This happens if the tension on the green side decreases and the tension on the red side increases. Final Answer: A and C.'
                     }
                 },
                 'logic-assistant': {
@@ -1795,6 +1848,61 @@
                         nano_text: 'Generated completed image showing missing top half with blurry tennis court background and extended net structure, matched Option B\'s blurry net section fitting top-right continuation.\n\nAnswer: Option B',
                         gpt: './static/img/gpt-vr/vis_5.png',
                         gpt_text: 'Generated completed image revealing missing top half with continued diagonal net structure and blurred blue court background without new elements, matched Option B\'s net and court continuation.\n\nAnswer: Option B'
+                    },
+                    'item6': {
+                        chart: './static/img/demo-vr/per_1.png',
+                        chart2: './static/img/demo-vr/per_1-2.png',
+                        reasoning_type: 'Multi-view',
+                        prompt: 'Determine if camera moves counter-clockwise (left) or clockwise (right) from Image 1 to Image 2.',
+                        answer: 'Right (clockwise)',
+                        nano: './static/img/nano-vr/per_1.png',
+                        nano_text: 'To transition from the view in Image 1 to the view in Image 2, the camera had to rotate to its right, or counter-clockwise, around the central point of the room. Final Answer: right',
+                        gpt: './static/img/gpt-vr/per_1.png',
+                        gpt_text: 'This spatial relationship indicates the camera moved from a position near the doorway toward the right-hand side of the room. Therefore, the camera rotated clockwise (right) from Image 1 to Image 2. Final Answer: right'
+                    },
+                    'item7': {
+                        chart: './static/img/demo-vr/per_2.png',
+                        chart2: './static/img/demo-vr/per_2-2.png',
+                        reasoning_type: 'Multi-view',
+                        prompt: 'Determine if camera moves counter-clockwise (left) or clockwise (right) from Image 1 to Image 2.',
+                        answer: 'Right (clockwise)',
+                        nano: './static/img/nano-vr/per_2.png',
+                        nano_text: 'By visualizing the scene from a wider perspective (as shown in the generated image), it is clear that the camera moved from a position primarily focused on the nightstand towards a position that encompasses more of the bed. Final Answer: left (counter-clockwise)',
+                        gpt: './static/img/gpt-vr/per_2.png',
+                        gpt_text: 'Use this wider view to understand where the two cameras were positioned. Image 1 focuses on the left bedside table from a top-left viewpoint. Image 2 moves rightward, showing the bed center and part of the right side. → The camera moved rightward around the bed. Final Answer: right (clockwise)'
+                    },
+                    'item8': {
+                        chart: './static/img/demo-vr/per_3.png',
+                        chart2: './static/img/demo-vr/per_3-2.png',
+                        reasoning_type: 'Multi-view',
+                        prompt: 'Determine if camera moves counter-clockwise (left) or clockwise (right) from Image 1 to Image 2.',
+                        answer: 'Left (counter-clockwise)',
+                        nano: './static/img/nano-vr/per_3.png',
+                        nano_text: 'The wider-angle view helps to see the full context of the bathroom. In Image 1, the camera is on the right showing the sinks and bathtub, while in Image 2 it shifts left, revealing the toilet and shower. This means the camera rotated right. Final Answer: right',
+                        gpt: './static/img/gpt-vr/per_3.png',
+                        gpt_text: 'From the wide view, Image 1’s perspective is more toward the right side (bathtub side), while Image 2’s perspective is shifted to the left (toilet side). Therefore, the camera rotated left (counter-clockwise) between Image 1 and Image 2. Final Answer: left (counter-clockwise)'
+                    },
+                    'item9': {
+                        chart: './static/img/demo-vr/per_4.png',
+                        chart2: './static/img/demo-vr/per_4-2.png',
+                        reasoning_type: 'Multi-view',
+                        prompt: 'Determine if camera moves counter-clockwise (left) or clockwise (right) from Image 1 to Image 2.',
+                        answer: 'Right (clockwise)',
+                        nano: './static/img/nano-vr/per_4.png',
+                        nano_text: 'When comparing these views in the wider-angle image, it is evident that to move from the perspective of Image 1 to Image 2, the camera had to rotate to its right to reveal the window, shelves, and backpack that were previously out of frame to the right. Final Answer: right',
+                        gpt: './static/img/gpt-vr/per_4.png',
+                        gpt_text: 'From this combined view, the first photo was taken facing the left corner of the room (toward the blank wall), while the second was taken after rotating the camera to the right to face the window and nightstand area. Final Answer: right'
+                    },
+                    'item10': {
+                        chart: './static/img/demo-vr/per_5.png',
+                        chart2: './static/img/demo-vr/per_5-2.png',
+                        reasoning_type: 'Multi-view',
+                        prompt: 'Determine if camera moves counter-clockwise (left) or clockwise (right) from Image 1 to Image 2.',
+                        answer: 'Right (clockwise)',
+                        nano: './static/img/nano-vr/per_5.png',
+                        nano_text: 'From the wider-angle image, we can see the relative positions of the painting, the door/doorway, the mirror, and the wardrobe. To move from the view in Image 1 to the view in Image 2, the camera had to rotate to its right. Final Answer: right',
+                        gpt: './static/img/gpt-vr/per_5.png',
+                        gpt_text: 'The wider-angle view (generated) shows all objects together — painting on the left, black door in the middle, mirror next to it, and wardrobe on the right. The camera rotated **clockwise (right)** from Image 1 to Image 2. Final Answer: right'
                     }
                 }
             };
@@ -1824,10 +1932,41 @@
                 // Update content based on selected item
                 const data = sampleDataTG[category] && sampleDataTG[category][item];
                 if (data) {
-                    document.getElementById('data-chart-tg').innerHTML = `
-                        <img src="${data.chart}" alt="Data Chart" style="max-width: 70%; max-height: 250px; object-fit: contain;">
-                        <div class="reasoning-type-label">${data.reasoning_type || 'Physical'}</div>
-                    `;
+                    let chartHTML = '';
+                    if (data.ground_truth) {
+                        // Display both chart and ground truth, stacked vertically
+                        chartHTML = `
+                            <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                                <div style="position: relative;">
+                                    <img src="${data.chart}" alt="Data Chart" style="max-width: 70%; max-height: 200px; object-fit: contain;">
+                                </div>
+                                <div style="position: relative;">
+                                    <img src="${data.ground_truth}" alt="Ground Truth" style="max-width: 70%; max-height: 200px; object-fit: contain;">
+                                    <div class="reasoning-type-label" style="right: -60px;top: 0px;">Ground Truth</div>
+                                </div>
+                            </div>
+                            <div class="reasoning-type-label">${data.reasoning_type || 'Physical'}</div>
+                        `;
+                    } else if (data.chart2) {
+                        // Display both chart and chart2, side by side, no label
+                        chartHTML = `
+                            <div style="display: flex; flex-direction: row; gap: 5px; align-items: center; justify-content: center;">
+                                <div style="position: relative;">
+                                    <img src="${data.chart}" alt="Data Chart" style="max-width: 100%; max-height: 200px; object-fit: contain;">
+                                </div>
+                                <div style="position: relative;">
+                                    <img src="${data.chart2}" alt="Chart 2" style="max-width: 100%; max-height: 200px; object-fit: contain;">
+                                </div>
+                            </div>
+                            <div class="reasoning-type-label">${data.reasoning_type || 'Physical'}</div>
+                        `;
+                    } else {
+                        chartHTML = `
+                            <img src="${data.chart}" alt="Data Chart" style="max-width: 100%; max-height: 250px; object-fit: contain;">
+                            <div class="reasoning-type-label">${data.reasoning_type || 'Physical'}</div>
+                        `;
+                    }
+                    document.getElementById('data-chart-tg').innerHTML = chartHTML;
                     document.getElementById('prompt-text-tg').textContent = data.prompt;
                     document.getElementById('answer-text-tg').textContent = data.answer || 'Expected answer will be displayed here.';
                     document.getElementById('nano-result-tg').innerHTML = `<img src="${data.nano}" alt="Nano Banana Result" style="max-width: 100%; max-height: 80px; object-fit: contain;">`;

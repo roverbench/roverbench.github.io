@@ -1836,7 +1836,7 @@ body {
 }
 
 .left-panel {
-  flex: 1;
+  flex: 0.8;
   min-width: 0;
 }
 
@@ -1865,7 +1865,7 @@ body {
 
 /* TG 的 data-chart 专门样式 - 缩小高度 */
 #data-chart-tg {
-  min-height: 200px; /* 缩小 TG 的框高度 */
+  max-height: 200px; /* 缩小 TG 的框高度 */
   padding: 20px; /* 减少内边距 */
 }
 
